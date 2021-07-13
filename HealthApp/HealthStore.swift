@@ -182,7 +182,7 @@ class HealthStore {
                 for heartRate in heartRates {
                     if heartRate.count >= self.maximumBPM {
                         // Schedule the notification
-                        self.scheduleHeartR     1§  -ateMonitoringNotification()
+                        self.scheduleHeartRateMonitoringNotification()
                         break // No need to check the other samples
                     }
                 }
