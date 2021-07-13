@@ -9,6 +9,8 @@
 
 import Foundation
 import HealthKit
+import UIKit
+import UserNotifications
 
 extension Date {
     static func mondayAt12AM() -> Date {
@@ -24,7 +26,9 @@ class HealthStore {
     var query: HKStatisticsCollectionQuery?
     var sampleQuery: HKSampleQuery?
 
-    init() {
+    static let shared = HealthStore()
+
+    private init() {
         if HKHealthStore.isHealthDataAvailable() {
             healthStore = HKHealthStore()
         }
@@ -112,7 +116,6 @@ class HealthStore {
         })
 
         // if health data is available & query contains value, then execute the query
-        // NOTE: if let ... is called "Optional Binding"
         if let healthStore = healthStore, let query =
             self.sampleQuery {
             healthStore.execute(query)
@@ -120,7 +123,98 @@ class HealthStore {
 //        print(self.sampleQuery) // it returns nothing at the moment
 
     }
-    
-    
-    // MARK: - 
+
+    // MARK: - BACKGROUND TASK, GETTING THE HEART RATE DATA
+    private var backgroundHeartRateMonitoringTask: UIBackgroundTaskIdentifier?
+    private var backgroundHeartRateMonitoringTaskRefreshTimer: Timer?
+    private var continuousHeartRateMonitoringQuery: HKAnchoredObjectQuery?
+    var maximumBPM = 100  // SETTING THIS VALUE AS DEFAULT. IT IS OBVERVED IN CreateTaskView.swift
+    private let notificationExpirationDuration: TimeInterval = 60 // 1 min
+
+    func startBackgroundHeartRateMonitoring() {
+        endBackgroundHeartRateMonitoringIfNeeded()
+        backgroundHeartRateMonitoringTask = UIApplication.shared.beginBackgroundTask(withName: "backgroundHeartRateMonitoringTask",
+                 expirationHandler: {
+                    self.endBackgroundHeartRateMonitoringIfNeeded()
+                 })
+
+        backgroundHeartRateMonitoringTaskRefreshTimer?.invalidate()
+        backgroundHeartRateMonitoringTaskRefreshTimer = Timer.scheduledTimer(withTimeInterval: 2.8,
+                                                         repeats: false,
+                                                         block: { (_: Timer) in
+                                                            self.startBackgroundHeartRateMonitoring()
+                                                         })
+
+        if continuousHeartRateMonitoringQuery == nil {
+
+            let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+
+            let predicate = HKQuery.predicateForSamples(withStart: Date().addingTimeInterval(-20), end: nil, options: .strictStartDate)// Starts a new query with the samples 20 seconds old and newer
+
+            continuousHeartRateMonitoringQuery = HKAnchoredObjectQuery(type: heartRateType,
+               predicate: predicate,
+               anchor: nil,
+               limit: HKObjectQueryNoLimit,
+               resultsHandler: { (_: HKAnchoredObjectQuery,
+                                  samples: [HKSample]?,
+                                  _: [HKDeletedObject]?,
+                                  _: HKQueryAnchor?,
+                                  _: Error?) in
+                self.handleHeartRateMonitoringQueryResponse(samples: samples)
+               })
+
+            continuousHeartRateMonitoringQuery?.updateHandler = { (_: HKAnchoredObjectQuery,
+                                                                   samples: [HKSample]?,
+                                                                   _: [HKDeletedObject]?,
+                                                                   _: HKQueryAnchor?,
+                                                                   _: Error?) in
+              self.handleHeartRateMonitoringQueryResponse(samples: samples)
+            }
+
+            healthStore?.execute(continuousHeartRateMonitoringQuery!)
+        }
+    }
+
+    private func handleHeartRateMonitoringQueryResponse(samples: [HKSample]?) {
+        if let samples = samples {
+            if self.shouldScheduleHeartRateMonitoringNotification() {
+                let heartRates = samples.compactMap { HeartRate(sample: $0) }
+                for heartRate in heartRates {
+                    if heartRate.count >= self.maximumBPM {
+                        // Schedule the notification
+                        self.scheduleHeartR     1§  -ateMonitoringNotification()
+                        break // No need to check the other samples
+                    }
+                }
+            }
+        }
+    }
+
+    func scheduleHeartRateMonitoringNotification() {
+        NotificationManager.shared.scheduleNotification(task: Task(name: "Your heart rate is too high!", reminder: Reminder(reminderType: .heartRateCeiling)))
+
+        // Mark the expiration in the UserDefaults
+        let oneMinuteInFuture = Date().addingTimeInterval(notificationExpirationDuration)
+        UserDefaults.standard.setDate(oneMinuteInFuture, key: .heartRateMonitoringNotificationTriggerTimestamp)
+    }
+
+    func shouldScheduleHeartRateMonitoringNotification() -> Bool {
+//        if let date = UserDefaults.standard.date(key: .heartRateMonitoringNotificationTriggerTimestamp),
+//           date.compare(Date()) == .orderedAscending {
+//            return false
+//        } else {
+            // No unexpired notification exists at the time
+            return true
+//        }
+    }
+
+    func endBackgroundHeartRateMonitoringIfNeeded() {
+        if let task = backgroundHeartRateMonitoringTask {
+            UIApplication.shared.endBackgroundTask(task)
+        }
+    }
+
+    func handleHeartRateNotification() {
+
+    }
 }

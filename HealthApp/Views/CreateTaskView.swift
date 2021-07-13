@@ -14,7 +14,8 @@ struct CreateTaskView: View {
   @State var reminderEnabled = false
   @State var selectedTrigger = ReminderType.time
   @State var timeDurationIndex: Int = 0
-  @State var heartRateCeiling: HKSample        // Heart Rate
+//  @State var heartRateCeiling: HKSample        // Heart Rate
+  @State var heartRateCeiling: Int = 100
   @State private var dateTrigger = Date()
   @State private var shouldRepeat = false
   @State private var latitude: String = ""
@@ -79,15 +80,15 @@ struct CreateTaskView: View {
     }
     var reminder = Reminder()
     reminder.reminderType = selectedTrigger
-    
+
     switch selectedTrigger {
-    
+
         case .time:
           reminder.timeInterval = TimeInterval(timeDurations[timeDurationIndex] * 60) // TODO: Change this to every DAY AND WEEK?
-        
+
         case .calendar:
           reminder.date = dateTrigger
-        
+
         case .location:
           if let latitude = Double(latitude),
             let longitude = Double(longitude),
@@ -97,24 +98,16 @@ struct CreateTaskView: View {
               longitude: longitude,
               radius: radius)
             }
-        
+
         case .heartRateCeiling:
-            reminder.heartRateCeiling =
-        
+//            reminder.heartRateCeiling = 100 //
+            break
+
     }
     reminder.repeats = shouldRepeat
     return reminder
   }
 }
-
-
-
-
-
-
-
-
-
 
 struct CreateTaskView_Previews: PreviewProvider {
   static var previews: some View {
@@ -125,7 +118,7 @@ struct CreateTaskView_Previews: PreviewProvider {
 struct ReminderView: View {
   @Binding var selectedTrigger: ReminderType
   @Binding var timeDurationIndex: Int
-  @Binding var heartRateCeiling: HKSample?       // HEART RATE CEILING
+  @Binding var heartRateCeiling: Int       // HEART RATE CEILING
   @Binding var triggerDate: Date
   @Binding var shouldRepeat: Bool
   @Binding var latitude: String
@@ -133,73 +126,99 @@ struct ReminderView: View {
   @Binding var radius: String
   @StateObject var locationManager = LocationManager()
 
-  var body: some View {
+    var mainPicker: some View {
 
-    VStack {
-      Picker("Notification Trigger", selection: $selectedTrigger) {
-        Text("Time").tag(ReminderType.time)
-        Text("Date").tag(ReminderType.calendar)
-        Text("Location").tag(ReminderType.location)
-        Text("Heart Rate").tag(ReminderType.heartRateCeiling)     // Heart Rate NOTIF
-      }
-      .pickerStyle(SegmentedPickerStyle())
-      .padding(.vertical)
-
-    // TIME
-      if selectedTrigger == ReminderType.time {
-        Picker("Time Interval", selection: $timeDurationIndex) {
-          ForEach(1 ..< 59) { interval in
-            if interval == 1 {
-              Text("\(interval) minute").tag(interval)
-            } else {
-              Text("\(interval) minutes").tag(interval)
-            }
-          }
-          .navigationBarHidden(true)
-          .padding(.vertical)
+        Picker("Notification Trigger", selection: $selectedTrigger) {
+            Text("Time").tag(ReminderType.time)
+            Text("Date").tag(ReminderType.calendar)
+            Text("Location").tag(ReminderType.location)
+            Text("Heart Rate").tag(ReminderType.heartRateCeiling)     // Heart Rate NOTIF
         }
+        .pickerStyle(SegmentedPickerStyle())
+        .padding(.vertical)
+    }
 
-    // DATE
-      } else if selectedTrigger == ReminderType.calendar {
-        DatePicker("Please enter a date", selection: $triggerDate)
-          .labelsHidden()
-          .padding(.vertical)
-
-    // LOCATION
-      } else if selectedTrigger = ReminderType.location {
+    var body: some View {
         VStack {
-          if !locationManager.authorized {
-            Button(
-              action: {
-                locationManager.requestAuthorization()
-              },
-              label: {
-                Text("Request Location Authorization")
-              })
-          } else {
-            TextField("Enter Latitude", text: $latitude)
-            TextField("Enter Longitude", text: $longitude)
-            TextField("Enter Radius", text: $radius)
-          }
+            mainPicker
+
+            pickerForSelectedTrigger()
+
+            Toggle(isOn: $shouldRepeat) {
+                Text("Make this a daily routine")
+            }
+        }
+    }
+
+    var timePicker: some View {
+        Picker("Time Interval", selection: $timeDurationIndex) {
+            ForEach(1 ..< 59) { interval in
+                if interval == 1 {
+                    Text("\(interval) minute").tag(interval)
+                } else {
+                    Text("\(interval) minutes").tag(interval)
+                }
+            }
+            .navigationBarHidden(true)
+            .padding(.vertical)
+        }
+    }
+
+    var calendarPicker: some View {
+        DatePicker("Please enter a date", selection: $triggerDate)
+            .labelsHidden()
+            .padding(.vertical)
+    }
+
+    var locationPicker: some View {
+        VStack {
+            if !locationManager.authorized {
+                Button(
+                    action: {
+                        locationManager.requestAuthorization()
+                    },
+                    label: {
+                        Text("Request Location Authorization")
+                    })
+            } else { // geocoding CLGeoCoder CoreLocation
+                TextField("Enter Latitude", text: $latitude)
+                TextField("Enter Longitude", text: $longitude)
+                TextField("Enter Radius", text: $radius)
+            }
         }
         .padding(.vertical)
-
-    // HEART RATE
-      } else {
-        Picker("Heart Rate Ceiling", selection: $heartRateCeiling) {
-          ForEach(40 ..< 160) { heartRateCeiling in
-            if heartRateCeiling == 1 {
-              Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
-            } else {
-              Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
-            }
-          }
-        }
-      }
-        
-      Toggle(isOn: $shouldRepeat) {
-        Text("Make this a daily routine")
-      }
     }
-  }
+
+    var heartRatePicker: some View {
+        Picker("Heart Rate Ceiling", selection: $heartRateCeiling) {
+            ForEach(40 ..< 160) { heartRateCeiling in
+                if heartRateCeiling == 1 {
+                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
+                } else {
+                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
+                }
+            }
+        }
+        .navigationBarTitle("", displayMode: .inline)
+        .onChange(of: heartRateCeiling) { limit in
+            HealthStore.shared.maximumBPM = limit
+
+        }
+    }
+
+    @ViewBuilder
+    func pickerForSelectedTrigger() -> some View {
+
+        // TIME
+        switch selectedTrigger {
+        case .time:
+            timePicker
+        case .calendar:
+            calendarPicker
+        case .location:
+            locationPicker
+        default:
+            heartRatePicker
+        }
+    }
 }

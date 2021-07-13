@@ -22,6 +22,7 @@
 		088E2A8B268E035F004A2ED4 /* HealthAppWatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088E2A8A268E035F004A2ED4 /* HealthAppWatchUITests.swift */; };
 		088E2A8F268E035F004A2ED4 /* HealthAppWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 088E2A58268E035C004A2ED4 /* HealthAppWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		088E2A9E268E05D8004A2ED4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088E2A9D268E05D8004A2ED4 /* MenuView.swift */; };
+		08921EA1269C727F003D0AB1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08921EA0269C727F003D0AB1 /* UserDefaults.swift */; };
 		08A79CE026934BC700A88E30 /* TaskPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CDC26934BC700A88E30 /* TaskPersistenceManager.swift */; };
 		08A79CE126934BC700A88E30 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CDD26934BC700A88E30 /* NotificationManager.swift */; };
 		08A79CE226934BC700A88E30 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CDE26934BC700A88E30 /* TaskManager.swift */; };
@@ -134,6 +135,7 @@
 		088E2A8A268E035F004A2ED4 /* HealthAppWatchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppWatchUITests.swift; sourceTree = "<group>"; };
 		088E2A8C268E035F004A2ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		088E2A9D268E05D8004A2ED4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		08921EA0269C727F003D0AB1 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		08A79CDC26934BC700A88E30 /* TaskPersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskPersistenceManager.swift; sourceTree = "<group>"; };
 		08A79CDD26934BC700A88E30 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		08A79CDE26934BC700A88E30 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				08F103332680E12E0017E6F9 /* HealthAppMain.swift */,
 				08A79CEC26934F5D00A88E30 /* AppDelegate.swift */,
 				08F103352680E12E0017E6F9 /* ContentView.swift */,
+				08921EA0269C727F003D0AB1 /* UserDefaults.swift */,
 				08F10367268102DD0017E6F9 /* Views */,
 				08A79CDB26934BB200A88E30 /* Managers */,
 				08F103642680F64C0017E6F9 /* Models */,
@@ -690,6 +693,7 @@
 				08F1036B2681E86A0017E6F9 /* TrackMeHome.swift in Sources */,
 				08A79CE326934BC700A88E30 /* LocationManager.swift in Sources */,
 				08A79CED26934F5D00A88E30 /* AppDelegate.swift in Sources */,
+				08921EA1269C727F003D0AB1 /* UserDefaults.swift in Sources */,
 				08A79CE926934C0300A88E30 /* NotificationSettingView.swift in Sources */,
 				08F103662680F67A0017E6F9 /* Step.swift in Sources */,
 				08714011268A2ACE00F0048F /* ContentView.swift in Sources */,

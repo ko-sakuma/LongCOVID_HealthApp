@@ -10,13 +10,6 @@ import HealthKit
 
 struct ContentView: View {
 
-    // SET UP HEALTHSTORE
-    private var healthStore: HealthStore?
-
-    init() {
-        healthStore = HealthStore()
-    }
-
     // REFERENCES
     @State private var steps: [Step] = [Step]()
     @State private var heartRates: [HeartRate] = [HeartRate]()
@@ -74,18 +67,16 @@ struct ContentView: View {
 
         }
         .onAppear {
-                if let healthStore = healthStore {
-                    healthStore.requestAuthorization { success in
-                        if success {
-                            healthStore.calculateSteps { statisticsCollection in
-                                if let statisticsCollection = statisticsCollection {
-                                    updateUIFromStepCountStatistics(statisticsCollection)
-                                }
-                            }
-                            healthStore.calculateHeartRate(completion: updateUIFromHeartRateSamples)
+            HealthStore.shared.requestAuthorization { success in
+                if success {
+                    HealthStore.shared.calculateSteps { statisticsCollection in
+                        if let statisticsCollection = statisticsCollection {
+                            updateUIFromStepCountStatistics(statisticsCollection)
                         }
                     }
+                    HealthStore.shared.calculateHeartRate(completion: updateUIFromHeartRateSamples)
                 }
+            }
         }
     }
  }

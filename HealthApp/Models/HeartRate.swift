@@ -8,8 +8,8 @@
 import Foundation
 import HealthKit
 
-struct HeartRate: Identifiable {
-    let id = UUID()
+struct HeartRate: Identifiable, Codable {
+    var id = UUID()
     let count: Int
     let date: Date
 }

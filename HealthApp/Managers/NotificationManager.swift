@@ -117,36 +117,34 @@ class NotificationManager: ObservableObject {
 
         // HEART RATE
         case .heartRateCeiling:
-            
+
             if HKHealthStore.isHealthDataAvailable() {
-                // 1: CHECK AUTHORISATION STATUS.
-                let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
-                
-                let store = HKHealthStore()
-                
-                // 2: Trigger
-                if let HeartRateCeiling = task.reminder.heartRateCeiling {
-                    trigger = // NEED TO WRITE A CLASS FOR heartRateCeiling Notification? Sth of a UNCalendar equivalent? Reference $heartRateCeiling in NotificationManager.swift and compare it against the user's HeartRate from HealthKit
-                }
+
+                let date = Date().addingTimeInterval(20) // 20 seconds
+                trigger = UNCalendarNotificationTrigger(
+                    dateMatching: Calendar.current.dateComponents(
+                        [.day, .month, .year, .hour, .minute],
+                        from: date),
+                    repeats: false)
+
                 content.threadIdentifier =
                     NotificationManagerConstants.HeartRateCeilingBasedNotificationThreadId
             }
-                
 
     }
 
     // 4 : CREATING A NOTIFICATION REQUEST
     if let trigger = trigger {
-      let request = UNNotificationRequest(
-        identifier: task.id,
-        content: content,
-        trigger: trigger)
-      // 5 : adding the request to UNUserNotificationCenter
-      UNUserNotificationCenter.current().add(request) { error in
-        if let error = error {
-          print(error)
+        let request = UNNotificationRequest(
+            identifier: task.id,
+            content: content,
+            trigger: trigger)
+        // 5 : adding the request to UNUserNotificationCenter
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print(error)
+            }
         }
-      }
     }
   }
 }
