@@ -13,6 +13,8 @@ import UIKit
 import UserNotifications
 
 extension Date {
+    // using iso8601 format because it is most appropriate for JSON.
+    // this aligns the timestamp on heartRate & stepcount data (HealthStore class) below with Symptom data (JSON)
     static func mondayAt12AM() -> Date {
         return Calendar(identifier: .iso8601)
             .date(from: Calendar(identifier: .iso8601)
@@ -128,7 +130,7 @@ class HealthStore {
     private var backgroundHeartRateMonitoringTask: UIBackgroundTaskIdentifier?
     private var backgroundHeartRateMonitoringTaskRefreshTimer: Timer?
     private var continuousHeartRateMonitoringQuery: HKAnchoredObjectQuery?
-    var maximumBPM = 100  // SETTING THIS VALUE AS DEFAULT. IT IS OBVERVED IN CreateTaskView.swift
+    var maximumBPM = 100  // SETTING THIS VALUE AS DEFAULT. IT IS @Observable from CreateTaskView.swift
     private let notificationExpirationDuration: TimeInterval = 60 // 1 min
 
     func startBackgroundHeartRateMonitoring() {

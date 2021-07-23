@@ -24,25 +24,25 @@ struct NotificationSettingsView: View {
                         setting: "Show in Notification Center",
                         enabled: notificationManager.settings?.notificationCenterSetting == .enabled)
                       SettingRowView(
-                        setting: "Sound Enabled?",
+                        setting: "Notification Sounds",
                         enabled: notificationManager.settings?.soundSetting == .enabled)
                       SettingRowView(
-                        setting: "Badges Enabled?",
+                        setting: "Notification Badges",
                         enabled: notificationManager.settings?.badgeSetting == .enabled)
                       SettingRowView(
-                        setting: "Alerts Enabled?",
+                        setting: "Alerts",
                         enabled: notificationManager.settings?.alertSetting == .enabled)
                       SettingRowView(
-                        setting: "Show on lock screen?",
+                        setting: "Show on lock screen",
                         enabled: notificationManager.settings?.lockScreenSetting == .enabled)
                       SettingRowView(
-                        setting: "Alert banners?",
+                        setting: "Alert banners",
                         enabled: notificationManager.settings?.alertStyle == .banner)
                       SettingRowView(
-                        setting: "Critical Alerts?",
+                        setting: "Critical Alerts",
                         enabled: notificationManager.settings?.criticalAlertSetting == .enabled)
                       SettingRowView(
-                        setting: "Siri Announcement?",
+                        setting: "Siri",
                         enabled: notificationManager.settings?.announcementSetting == .enabled)
                     }
                 }

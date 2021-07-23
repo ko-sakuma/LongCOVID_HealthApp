@@ -12,7 +12,7 @@ struct HealthAppApp: App {
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {
-                NotificationWatchView()
+                NotificationView()
             }
         }
 

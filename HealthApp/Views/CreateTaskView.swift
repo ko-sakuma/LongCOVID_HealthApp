@@ -14,7 +14,6 @@ struct CreateTaskView: View {
   @State var reminderEnabled = false
   @State var selectedTrigger = ReminderType.time
   @State var timeDurationIndex: Int = 0
-//  @State var heartRateCeiling: HKSample        // Heart Rate
   @State var heartRateCeiling: Int = 100
   @State private var dateTrigger = Date()
   @State private var shouldRepeat = false

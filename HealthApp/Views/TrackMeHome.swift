@@ -47,6 +47,11 @@ struct TrackMeHome: View {
 
         NavigationView {
 
+//            ZStack {
+//
+//                Color(#colorLiteral(red: 0.9490196108818054, green: 0.9490196108818054, blue: 0.9686274528503418, alpha: 1))
+//                    .ignoresSafeArea()
+
             ScrollView {
 
             VStack {
@@ -55,45 +60,53 @@ struct TrackMeHome: View {
                 VStack {
 
                     VStack {
-                        Text("Step Counts")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.leading)
-                            .position(.init(x: 80, y: 30))
 
-                        HStack(alignment: .lastTextBaseline) {
-                                ForEach(steps, id: \.id) { step in
-
-                                    let yValue = Swift.min(step.count/20, 300)
-
-                                    VStack {
-                                        Text("\(step.count)")
-                                            .font(.caption)
-                                            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
-                                        Rectangle()
-                                            .fill(step.count > 2000 ? Color(#colorLiteral(red: 0.9843137264251709, green: 0.6627451181411743, blue: 0.13333334028720856, alpha: 1)) :Color.green)
-                                            .frame(width: 20, height: CGFloat(yValue))
-                                        Text("\(step.date, formatter: Self.dateFormatter)")
-                                            .font(.caption)
-                                            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
-                                    }
-                                }
-
-                        }
-                        .frame(width: 400, height: 300)
+                            (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
+                                .font(.title2)
+                                .foregroundColor(Color(.systemRed))
+                                .fontWeight(.bold)
+                                .multilineTextAlignment(.leading)
+                                .position(.init(x: 50, y: 30))
 
                         VStack {
-                            Text("Your steps this week: \(totalSteps)")
+                            HStack(alignment: .lastTextBaseline) {
+                                    ForEach(steps, id: \.id) { step in
+
+                                        let yValue = Swift.min(step.count/20, 300)
+
+                                        VStack {
+                                            Text("\(step.count)")
+                                                .font(.caption)
+                                                .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
+                                            Rectangle()
+                                                .fill(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
+                                                .frame(width: 20, height: CGFloat(yValue))
+                                            Text("\(step.date, formatter: Self.dateFormatter)")
+                                                .font(.caption)
+                                                .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
+                                        }
+                                    }
+
+                            }
+                            .frame(width: 400, height: 200)
+
+//                            Text("Your steps this week: \(totalSteps)")
+//                                .font(.subheadline)
+//                                .padding(.top, 15.0)
+//                                .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
+
+                            Text("Your Step Count Ceiling this week: 2000 / day")
                                 .font(.subheadline)
-                                .padding(.top, 15.0)
+                                .padding(.top, 70.0)
                                 .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
+
                         }
-                        .padding(.bottom, 20.0)
+
                     }
 
                 }
                 .frame(width: 380, height: 410, alignment: .bottom)
-                .background(Color(#colorLiteral(red: 0.8980392217636108, green: 0.8980392217636108, blue: 0.8980392217636108, alpha: 1)))
+                .background(Color(.white))
                 .cornerRadius(10)
                 .padding(10)
 
@@ -102,8 +115,9 @@ struct TrackMeHome: View {
                 // HEART RATE GRAPH
                 VStack {
                     VStack {
-                        Text("Heart Rates")
+                        (Text(Image(systemName: "heart.fill")) + Text(" Heart Rates"))
                             .font(.title2)
+                            .foregroundColor(Color(.systemPink))
                             .fontWeight(.bold)
                             .multilineTextAlignment(.leading)
                             .position(.init(x: 80, y: 30))
@@ -136,6 +150,11 @@ struct TrackMeHome: View {
                             .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
                             .padding(.top, 20.0)
 
+                        Text("Your Heart Rate ceiling this week: 70")
+                            .font(.subheadline)
+                            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
+                            .padding(.top, 20.0)
+
                         // COMMENT OUT UNTIL THE averateHeartRates formulate is corrected.
 //                        Text("Your average heart rate this week:  \(averageHeartRates)")
 //                            .font(.subheadline)
@@ -147,7 +166,7 @@ struct TrackMeHome: View {
                 }
                 // END OF THE VSTACK FOR HEART RATE
                 .frame(width: 380, height: 410, alignment: .bottom)
-                .background(Color(#colorLiteral(red: 0.8980392217636108, green: 0.8980392217636108, blue: 0.8980392217636108, alpha: 1)))
+                .background(Color(.white))
                 .cornerRadius(10)
                 .padding(10)
 
@@ -166,7 +185,7 @@ struct TrackMeHome: View {
 
           }
         }
-
+//        }
     }
 }
 

@@ -40,7 +40,8 @@ struct ContentView: View {
     enum Tab {
         case trackMe
         case remindMe
-//        case aboutMe
+//      case updateMe
+//      case aboutMe
     }
 
     var body: some View {
@@ -59,7 +60,13 @@ struct ContentView: View {
                 }
                 .tag(Tab.remindMe)
 
-//            TrackMeHome(steps: steps, heartRates: heartRates) // Wrong function for now.
+//            UpdateMeView2()
+//                .tabItem {
+//                    Label("Update", systemImage: "plus.circle")
+//                }
+//                .tag(Tab.updateMe)
+
+//            Settings() // Wrong function for now.
 //                .tabItem {
 //                    Label("Settings", systemImage: "person.crop.circle")
 //                }
