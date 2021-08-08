@@ -61,8 +61,9 @@ class HealthStore {
         // stepType: gets the step count data from HealthKit
         let stepType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
 
-        // startDate: defines the past 7 days
-        let startDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())
+        // startDate: defines the past 2 years (730 days)
+        let startDate = Calendar.current.date(byAdding: .day, value: -730, to: Date())
+//        print(startDate)
 
         // anchorDate: defines what time a day actually starts at. mondayAt12AM() is my func, defined above.
         let anchorDate = Date.mondayAt12AM()
@@ -99,8 +100,8 @@ class HealthStore {
         let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
         print(heartRateType)
 
-        // startDate: defines the past 7 days
-        let startDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())
+        // startDate: defines the past 2 years (730 days)
+        let startDate = Calendar.current.date(byAdding: .day, value: -730, to: Date())
 
         // anchorDate: defines what time a day actually starts at. mondayAt12AM() is my func, defined above.
         let anchorDate = Date.mondayAt12AM()
@@ -114,8 +115,12 @@ class HealthStore {
         // query = create a statistics collection query that would include what I want, as defined above.
         // NOTE: HKStatisticsCollectionQuery is useful for graphs; but HKStatisticsQuery, not as much.
         sampleQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: -1, sortDescriptors: nil, resultsHandler: { (_: HKSampleQuery, samples: [HKSample]?, _: Error?) in
-            completion(samples ?? [])
+            completion(Array(samples ?? []))
         })
+
+//        sampleQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: -1, sortDescriptors: nil, resultsHandler: { (_: HKSampleQuery, samples: [HKSample]?, _: Error?) in
+//            completion(Array(samples?.prefix(1000) ?? []))
+//        })
 
         // if health data is available & query contains value, then execute the query
         if let healthStore = healthStore, let query =
@@ -134,6 +139,7 @@ class HealthStore {
     private let notificationExpirationDuration: TimeInterval = 60 // 1 min
 
     func startBackgroundHeartRateMonitoring() {
+
         endBackgroundHeartRateMonitoringIfNeeded()
         backgroundHeartRateMonitoringTask = UIApplication.shared.beginBackgroundTask(withName: "backgroundHeartRateMonitoringTask",
                  expirationHandler: {
@@ -216,7 +222,4 @@ class HealthStore {
         }
     }
 
-    func handleHeartRateNotification() {
-
-    }
 }

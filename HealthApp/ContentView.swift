@@ -17,15 +17,15 @@ struct ContentView: View {
     // MARK: - UPDATE UI FROM STATISTICS (STEPS)
     private func updateUIFromStepCountStatistics(_ statisticsCollection: HKStatisticsCollection) {
 
-        let startDate = Calendar.current.date(byAdding: .day, value: -6, to: Date())!
+        let startDate = Calendar.current.date(byAdding: .day, value: -730, to: Date())!   // fetching 2 years back (730 days)
         let endDate = Date()
 
         statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { (statistics, _) in
-
-            let count = statistics.sumQuantity()?.doubleValue(for: .count())
-            let step = Step(count: Int(count ?? 0), date: statistics.startDate)
-            steps.append(step)
-
+            DispatchQueue.main.async {
+                let count = statistics.sumQuantity()?.doubleValue(for: .count())
+                let step = Step(count: Int(count ?? 0), date: statistics.startDate)
+                steps.append(step)
+            }
         }
     }
 
@@ -47,41 +47,52 @@ struct ContentView: View {
     var body: some View {
 
         TabView(selection: $selection) {
-            TrackMeHome(steps: steps, heartRates: heartRates)
-                .tabItem {
-                    Label("Track", systemImage: "waveform.path.ecg")
 
+            TrackMeHome(steps: steps, heartRates: heartRates)
+//            }
+                .tabItem {
+                    Label("Summary", systemImage: "house.fill")
                 }
                 .tag(Tab.trackMe)
 
             TaskListView()
                 .tabItem {
-                    Label("Remind", systemImage: "bell")
+                    Label("Goals", systemImage: "target")
                 }
                 .tag(Tab.remindMe)
-
-//            UpdateMeView2()
-//                .tabItem {
-//                    Label("Update", systemImage: "plus.circle")
-//                }
-//                .tag(Tab.updateMe)
-
-//            Settings() // Wrong function for now.
-//                .tabItem {
-//                    Label("Settings", systemImage: "person.crop.circle")
-//                }
-//                .tag(Tab.aboutMe)
-
         }
+
+////            UpdateMeView2()
+////                .tabItem {
+////                    Label("Update", systemImage: "plus.circle")
+////                }
+////                .tag(Tab.updateMe)
+//
+////            Settings() // Wrong function for now.
+////                .tabItem {
+////                    Label("Settings", systemImage: "person.crop.circle")
+////                }
+////                .tag(Tab.aboutMe)
+//
+//        }
+
         .onAppear {
             HealthStore.shared.requestAuthorization { success in
                 if success {
                     HealthStore.shared.calculateSteps { statisticsCollection in
-                        if let statisticsCollection = statisticsCollection {
-                            updateUIFromStepCountStatistics(statisticsCollection)
+                        DispatchQueue.main.async {
+                            if let statisticsCollection = statisticsCollection {
+                                updateUIFromStepCountStatistics(statisticsCollection)
+                            }
                         }
                     }
-                    HealthStore.shared.calculateHeartRate(completion: updateUIFromHeartRateSamples)
+//                    print("willLoad", Date())
+                    HealthStore.shared.calculateHeartRate { result in
+//                        print("loaded", Date(), result)
+                        DispatchQueue.main.async {
+                            updateUIFromHeartRateSamples(result)
+                        }
+                    }
                 }
             }
         }

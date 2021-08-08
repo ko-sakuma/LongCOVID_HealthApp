@@ -42,6 +42,7 @@
 		08F103632680E92D0017E6F9 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F103622680E92D0017E6F9 /* HealthKit.framework */; };
 		08F103662680F67A0017E6F9 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F103652680F67A0017E6F9 /* Step.swift */; };
 		08F1036B2681E86A0017E6F9 /* TrackMeHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1036A2681E86A0017E6F9 /* TrackMeHome.swift */; };
+		08FFA8B726BF1BE60037616E /* OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +165,7 @@
 		08F103622680E92D0017E6F9 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		08F103652680F67A0017E6F9 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		08F1036A2681E86A0017E6F9 /* TrackMeHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMeHome.swift; sourceTree = "<group>"; };
+		08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppear.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,11 +319,12 @@
 		08F103322680E12E0017E6F9 /* HealthApp */ = {
 			isa = PBXGroup;
 			children = (
+				08FFA8B526BF1BD10037616E /* Helpers */,
 				08F103602680E92D0017E6F9 /* HealthApp.entitlements */,
 				08F103332680E12E0017E6F9 /* HealthAppMain.swift */,
 				08A79CEC26934F5D00A88E30 /* AppDelegate.swift */,
-				08F103352680E12E0017E6F9 /* ContentView.swift */,
 				08921EA0269C727F003D0AB1 /* UserDefaults.swift */,
+				08F103352680E12E0017E6F9 /* ContentView.swift */,
 				08F10367268102DD0017E6F9 /* Views */,
 				08A79CDB26934BB200A88E30 /* Managers */,
 				08F103642680F64C0017E6F9 /* Models */,
@@ -386,6 +389,14 @@
 				08A79CE626934C0300A88E30 /* NotificationSettingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		08FFA8B526BF1BD10037616E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -650,7 +661,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -695,6 +707,7 @@
 				08A79CED26934F5D00A88E30 /* AppDelegate.swift in Sources */,
 				08921EA1269C727F003D0AB1 /* UserDefaults.swift in Sources */,
 				08A79CE926934C0300A88E30 /* NotificationSettingView.swift in Sources */,
+				08FFA8B726BF1BE60037616E /* OnFirstAppear.swift in Sources */,
 				08F103662680F67A0017E6F9 /* Step.swift in Sources */,
 				08714011268A2ACE00F0048F /* ContentView.swift in Sources */,
 				08F1035F2680E1830017E6F9 /* HealthStore.swift in Sources */,

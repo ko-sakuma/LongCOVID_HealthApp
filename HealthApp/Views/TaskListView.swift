@@ -60,7 +60,7 @@ struct TaskListView: View {
                 if taskManager.tasks.isEmpty {
 //
                     Spacer()
-                    Text("You haven't set any reminders yet.")
+                    Text("You haven't set any goals yet.")
                         .foregroundColor(.gray)
                         .font(.body)
                     Spacer()
@@ -75,7 +75,7 @@ struct TaskListView: View {
 
         }
     }
-    .navigationBarTitle("Remind")
+    .navigationBarTitle("Goals")
         } // Z
   }
 
