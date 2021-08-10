@@ -1,90 +1,95 @@
-//
-//  CreateTaskView.swift
-//  NotificationsTest
-//
-//  Created by Ko Sakuma on 04/07/2021.
-//
 
 import SwiftUI
 import MapKit
 import HealthKit
 
+// TODO: task -> target
+
 struct CreateTaskView: View {
-  @State var taskName: String = ""
-  @State var reminderEnabled = false
-  @State var selectedTrigger = ReminderType.time
-  @State var timeDurationIndex: Int = 0
-  @State var heartRateCeiling: Int = 60
-  @State private var dateTrigger = Date()
-  @State private var shouldRepeat = false
-  @State private var latitude: String = ""
-  @State private var longitude: String = ""
-  @State private var radius: String = ""
-  @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State var taskName: String = ""
+    @State var reminderEnabled = false
+    @State var selectedTrigger = ReminderType.time
+    
+    @State var timeDurationIndex: Int = 0
+    @State var heartRateCeiling: Int = 60
+    
+    @State private var dateTrigger = Date()
+    @State private var shouldRepeat = false
 
-  let triggers = ["Time", "Calendar", "Location", "HeartRateCeiling"] // Heart Rate
-  let timeDurations: [Int] = Array(1...59)
-  var body: some View {
-    NavigationView {
-      Form {
-        Section {
-          HStack {
-//            Text("")
-//                .font(.title)
-//                .fontWeight(.bold)
-//                .padding()
-            Spacer()
-            Button("Save") {
-              TaskManager.shared.addNewTask(taskName, makeReminder())
-              presentationMode.wrappedValue.dismiss()
-            }
-            .disabled(taskName.isEmpty ? true : false)
-            .padding()
-          }
-          VStack {
-            TextField("Do my breathing excercise...", text: $taskName)
-              .padding(.vertical)
-            Toggle(isOn: $reminderEnabled) {
-              Text("Set a smart reminder")
-            }
-            .padding(.vertical)
+    @State private var latitude: String = ""
+    @State private var longitude: String = ""
+    @State private var radius: String = ""
+    
 
-            if reminderEnabled {
-              ReminderView(
-                selectedTrigger: $selectedTrigger,
-                timeDurationIndex: $timeDurationIndex,
-                heartRateCeiling: $heartRateCeiling,      // HEART RATE
-                triggerDate: $dateTrigger,
-                shouldRepeat: $shouldRepeat,
-                latitude: $latitude,
-                longitude: $longitude,
-                radius: $radius)
-                .navigationBarHidden(true)
-                .navigationTitle("")
+    let triggers = ["Time", "Calendar", "Location", "HeartRateCeiling"] // Heart Rate
+    let timeDurations: [Int] = Array(1...59)
+    
+    
+    var body: some View {
+        NavigationView {
+          Form {
+            Section {
+              HStack {
+        //            Text("")
+        //                .font(.title)
+        //                .fontWeight(.bold)
+        //                .padding()
+                Spacer()
+                Button("Save") {
+                  TaskManager.shared.addNewTask(taskName, makeReminder())
+                  presentationMode.wrappedValue.dismiss()
+                }
+                .disabled(taskName.isEmpty ? true : false)
+                .padding()
+              }
+              VStack {
+                TextField("Do my breathing excercise...", text: $taskName)
+                  .padding(.vertical)
+                Toggle(isOn: $reminderEnabled) {
+                  Text("Set a smart reminder")
+                }
+                .padding(.vertical)
+
+                if reminderEnabled {
+                  ReminderView(
+                    selectedTrigger: $selectedTrigger,
+                    timeDurationIndex: $timeDurationIndex,
+                    heartRateCeiling: $heartRateCeiling,      // HEART RATE
+                    triggerDate: $dateTrigger,
+                    shouldRepeat: $shouldRepeat,
+                    latitude: $latitude,
+                    longitude: $longitude,
+                    radius: $radius)
+                    .navigationBarHidden(true)
+                    .navigationTitle("")
+                }
+        //            Spacer()
+              }
+              .padding()
             }
-//            Spacer()
           }
-          .padding()
+        //      .navigationBarTitle("Tasks")
+          .navigationBarTitle("")
+          .navigationBarHidden(true)
         }
-      }
-//      .navigationBarTitle("Tasks")
-      .navigationBarTitle("")
-      .navigationBarHidden(true)
     }
-  }
 
+    
   func makeReminder() -> Reminder? {
     guard reminderEnabled else {
       return nil
     }
+    
     var reminder = Reminder()
     reminder.reminderType = selectedTrigger
 
     switch selectedTrigger {
-
+    
         case .time:
           reminder.timeInterval = TimeInterval(timeDurations[timeDurationIndex] * 60) // TODO: Change this to every DAY AND WEEK?
-
+    
         case .calendar:
           reminder.date = dateTrigger
 
@@ -108,22 +113,22 @@ struct CreateTaskView: View {
   }
 }
 
-struct CreateTaskView_Previews: PreviewProvider {
-  static var previews: some View {
-    CreateTaskView()
-  }
-}
+    struct CreateTaskView_Previews: PreviewProvider {
+      static var previews: some View {
+        CreateTaskView()
+      }
+    }
 
-struct ReminderView: View {
-  @Binding var selectedTrigger: ReminderType
-  @Binding var timeDurationIndex: Int
-  @Binding var heartRateCeiling: Int       // HEART RATE CEILING
-  @Binding var triggerDate: Date
-  @Binding var shouldRepeat: Bool
-  @Binding var latitude: String
-  @Binding var longitude: String
-  @Binding var radius: String
-  @StateObject var locationManager = LocationManager()
+    struct ReminderView: View {
+        @Binding var selectedTrigger: ReminderType
+        @Binding var timeDurationIndex: Int
+        @Binding var heartRateCeiling: Int       // HEART RATE CEILING
+        @Binding var triggerDate: Date
+        @Binding var shouldRepeat: Bool
+        @Binding var latitude: String
+        @Binding var longitude: String
+        @Binding var radius: String
+        @StateObject var locationManager = LocationManager()
 
     var mainPicker: some View {
 
@@ -149,6 +154,7 @@ struct ReminderView: View {
         }
     }
 
+        
     var timePicker: some View {
         Picker("Time Interval", selection: $timeDurationIndex) {
             ForEach(1 ..< 59) { interval in

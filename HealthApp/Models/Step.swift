@@ -1,9 +1,3 @@
-//
-//  Step.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 21/06/2021.
-//
 
 import Foundation
 

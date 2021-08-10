@@ -1,9 +1,4 @@
-//
-//  AppDelegate.swift
-//  NotificationsTest
-//
-//  Created by Ko Sakuma on 05/07/2021.
-//
+
 // TODO: <<IMPORTANT>> CHANGE THE NOTIFICATION CATEGORY IDENTIFIER TO MY REGISTERED APP NAME! (line 52)
 // NOTE: UIKit was used to create foreground notification. AppDelegate is called in HelathAppMain.swift
 

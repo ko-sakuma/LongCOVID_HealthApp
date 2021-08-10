@@ -1,9 +1,3 @@
-//
-//  TaskPersistenceManager.swift
-//  NotificationsTest
-//
-//  Created by Ko Sakuma on 04/07/2021.
-//
 
 import Foundation
 

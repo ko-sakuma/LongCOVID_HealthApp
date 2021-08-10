@@ -1,41 +1,61 @@
-//
-//  TrackMeHome.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 22/06/2021.
-//
 
 import SwiftUI
 
-// TODO: Move this to a seperate file
-struct HeartRateDateGroup: Identifiable {
-    var id = UUID()
-    let date: Date
-    let heartRates: [HeartRate]
-}
 
-struct TrackMeHome: View {
+struct SummaryTabView: View {
 
     // Get the user's default calendar preference (week starts from Mon/Sun)
     @Environment(\.calendar) private var calendar
-
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM"
-        return formatter
-    }()
+    @State private var selectedHeartRateDay: Date = .distantPast
 
     let steps: [Step]
     let heartRates: [HeartRate]
     let heartRateDateGroups: [HeartRateDateGroup]
     
-    var totalSteps: Int { steps.map { $0.count }.reduce(0, +) }
-    var totalHeartRates: Int { heartRates.map { $0.count }.reduce(0, +) }
-//    var averageHeartRates: Int { return totalHeartRates / 7 } // Wrong, 7 should be total count
-    var maxHeartRates: Int { heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) }) }
-    var minHeartRates: Int { heartRates.map { $0.count }.reduce( Int.max, { Swift.min($0, $1) }) }
+    
+    var body: some View {
+        
+        NavigationView {
+            ScrollView {
 
-    // Grouping the Heart Rate sample by day
+                    VStack(alignment: .leading) {
+                        
+                        // STEP COUNT SECTION
+                        stepsChartTitle()
+                        ScrollView(.horizontal) { stepsChart(steps: steps, heartRates: heartRates, heartRateDateGroups: heartRateDateGroups) }
+                        stepsChartCeilingText()
+                  
+                        // HEART RATE SECTION
+                        heartRateChartTitle
+                        heartRateChart
+                        heartRateChartCeilingText
+                    }
+                    .background(Color(.white))
+                    .cornerRadius(10)
+                    .padding(10)
+
+                }
+                .navigationTitle("Summary")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            // TODO: Add JSON things here, when ready!
+                            print("Remember to Add JSONSymptoms functions here!")
+                        }, label: {
+                            Text("Add Symptom")
+                        })
+                    }
+                }
+
+        }
+        .onFirstAppear {
+            DispatchQueue.main.async {
+                selectedHeartRateDay = weeks.last?.key ?? .distantPast
+            }
+        }
+    }
+    
+    // MARK: - Initialiser that groups the Heart Rate samples by day
     init(steps: [Step], heartRates: [HeartRate]) {
         self.steps = steps
         self.heartRates = heartRates
@@ -47,6 +67,7 @@ struct TrackMeHome: View {
             var groups = [HeartRateDateGroup]()
             var date = heartRates[0].date
             let calendar = Calendar.current
+
             let parameterHeartRates = heartRates
             var heartRates: [HeartRate] = []
 
@@ -77,60 +98,79 @@ struct TrackMeHome: View {
             .sorted(by: { $0.key < $1.key })
             self.weeks = weeks
         }
-
     }
     
+   
+    // MARK: - Steps chart related
+    var totalSteps: Int { steps.map { $0.count }.reduce(0, +) }
+    var totalHeartRates: Int { heartRates.map { $0.count }.reduce(0, +) }
     
-    // DEFINE VIEW
-    var body: some View {
-        
-        NavigationView {
-            ScrollView {
+//    var stepsChartTitle: some View {
+//        (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
+//            .font(.title2)
+//            .foregroundColor(Color(.systemRed))
+//            .fontWeight(.bold)
+//            .multilineTextAlignment(.leading)
+//    }
+    
+//    var stepsChart: some View {
+//        let max = CGFloat(steps.map(\.count).max() ?? 0)
+//        let min: CGFloat = 0
+//        let ySpan: CGFloat = max - min
+//        let yFactor: CGFloat = hrGraphHeight / ySpan
+//
+//            return HStack(alignment: .lastTextBaseline) {
+//
+//                ForEach(steps, id: \.id) { step in
+//                        let yValue = CGFloat(step.count) * yFactor
+//
+//                        VStack {
+//                            RoundedRectangle(cornerRadius: 10)
+//                                .fill(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
+//                                .frame(height: CGFloat(yValue))
+//                                .overlay(
+//                                    Text("\(step.count)")
+//                                            .font(.caption)
+//                                            .fontWeight(.bold)
+//                                            .foregroundColor(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
+//                                        .offset(y: -20),
+//                                    alignment: .top
+//                                )
+//                                .frame(height: hrGraphHeight, alignment: .bottom)
+//
+//                            Text("\(step.date, formatter: Self.dateFormatter)")
+//                                .font(.caption)
+//                                .foregroundColor(Color.black)
+//                        }
+//                        .frame(width: 42)
+//                    }
+//        }
+//        .padding(.vertical, 30)
+//    }
+    
+//    var stepsChartCeilingText: some View {
+//        Text("Your Step Count Ceiling this week: 2000 / day") // TODO: Replace hardcoded 2000 with actual goal set by user
+//            .font(.subheadline)
+//            .fontWeight(.bold)
+//            .foregroundColor(Color.black)
+//    }
 
-                    // STEP COUNT SECTION
-                    VStack(alignment: .leading) {
-                        stepsChartTitle
-                        ScrollView(.horizontal) { stepsChart }
-                        stepsChartCeilingText
-                  
-                    // HEART RATE SECTION
-                        heartRateChartTitle
-                        heartRateChart
-                        heartRateChartCeilingText
-                    }
-                    .background(Color(.white))
-                    .cornerRadius(10)
-                    .padding(10)
-
-                }
-                .navigationTitle("Summary")
-
-                //            .toolbar {
-                //                ToolbarItem(placement: .navigationBarTrailing) {
-                //                    Button(action: {
-                //
-                //                    }, label: {
-                //                        Text("Edit Thresholds")
-                //                    })
-                //                }
-                //            }
-
-        }
-        .onFirstAppear {
-            DispatchQueue.main.async {
-                selectedHeartRateDay = weeks.last?.key ?? .distantPast
-            }
-        }
-    }
-
+    
+    // MARK: - Heart Rate Chart related
+    private var weeks: [(key: Date, value: [HeartRateDateGroup])]
+    
+    var maxHeartRates: Int { heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) }) }
+    var minHeartRates: Int { heartRates.map { $0.count }.reduce( Int.max, { Swift.min($0, $1) }) }
     
     let hrGraphHeight: CGFloat = 260
+    
     let sampleSize: CGFloat = 40
+    
     var min: CGFloat { CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).min() ?? 0) }
     var max: CGFloat {  CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).max() ?? 0) }
+    
     var ySpan: CGFloat { max - min }
     var yFactor: CGFloat { ((hrGraphHeight - sampleSize) / ySpan) }
-    
     
     var heartRateChartTitle: some View {
         (Text(Image(systemName: "heart.fill")) + Text(" Heart Rates"))
@@ -141,6 +181,44 @@ struct TrackMeHome: View {
             .position(.init(x: 80, y: 30))
     }
     
+    var heartRateChart: some View {
+        TabView(selection: $selectedHeartRateDay) {
+            ForEach(weeks, id: \.key) { (date, week) in
+                heartRateChartWeek(week)
+            }
+        }
+        .tabViewStyle(PageTabViewStyle())
+        .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
+    }
+
+    func heartRateChartWeek(_ week: [HeartRateDateGroup]) -> some View {
+        HStack(alignment: .bottom) {
+            ForEach(week, id: \.id) { group in
+                VStack {
+                    ZStack(alignment: .bottom) {
+                        
+                        ForEach(group.heartRates, id: \.id) { heartRate in
+                            let yValue = (CGFloat(heartRate.count) - min) * yFactor
+                            RoundedRectangle(cornerRadius: sampleSize/2)
+                                .fill(Color(.systemPink))
+//                                .overlay(Text(String(describing: heartRate.count))) // KEEP
+                                .offset(x: 0, y: (sampleSize / 2) - yValue )
+                                .frame(width: sampleSize, height: sampleSize)
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                        }
+                        
+                    }
+                    .padding(.vertical, sampleSize/2)
+                    .frame(height: hrGraphHeight)
+                    
+                    Text("\(group.date, formatter: Self.dateFormatter)")
+                        .font(.caption)
+                        .foregroundColor(Color.gray)
+                }
+            }
+        }
+    }
+    
     var heartRateChartCeilingText: some View {
         Text("Your Heart Rate ceiling this week: 70")
             .font(.subheadline)
@@ -149,46 +227,22 @@ struct TrackMeHome: View {
     }
     
     
-    @State private var selectedHeartRateDay: Date = .distantPast
     
-    var heartRateChart: some View {
-        TabView(selection: $selectedHeartRateDay) {
-            ForEach(weeks, id: \.key) { (_, week) in
-                heartRateChartWeek(week)
-            }
-        }
-        .tabViewStyle(PageTabViewStyle())
-        .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
-    }
+}
 
+
+extension Date {
+    func startOfWeek(using calendar: Calendar) -> Date {
+        calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date!
+    }
+}
+
+
+
+
+struct stepsChartTitle:  View {
     
-    func heartRateChartWeek(_ week: [HeartRateDateGroup]) -> some View {
-        HStack(alignment: .bottom) {
-            ForEach(week, id: \.id) { group in
-                VStack {
-                    ZStack(alignment: .bottom) {
-
-                        ForEach(group.heartRates, id: \.id) { heartRate in
-                            let yValue = (CGFloat(heartRate.count) - min) * yFactor
-                            RoundedRectangle(cornerRadius: sampleSize/2)
-                                .fill(Color.red)
-                                .overlay(Text(String(describing: heartRate.count)))
-                                .offset(x: 0, y: (sampleSize / 2) - yValue )
-                                .frame(width: sampleSize, height: sampleSize)
-                                .frame(maxHeight: .infinity, alignment: .bottom)
-                        }
-                    }
-                    .padding(.vertical, sampleSize/2)
-                    .frame(height: hrGraphHeight)
-                    Text("\(group.date, formatter: Self.dateFormatter)")
-                        .font(.caption)
-                        .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
-                }
-            }
-        }
-    }
-
-    var stepsChartTitle: some View {
+    var body: some View {
         (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
             .font(.title2)
             .foregroundColor(Color(.systemRed))
@@ -196,51 +250,92 @@ struct TrackMeHome: View {
             .multilineTextAlignment(.leading)
     }
     
-    var stepsChartCeilingText: some View {
+}
+
+struct stepsChart: View {
+    
+    let steps: [Step]
+    let heartRates: [HeartRate]
+    let heartRateDateGroups: [HeartRateDateGroup]
+    
+    let hrGraphHeight: CGFloat = 260
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM"
+        return formatter
+    }()
+    
+    var body: some View {
+        let max = CGFloat(steps.map(\.count).max() ?? 0)
+        let min: CGFloat = 0
+        let ySpan: CGFloat = max - min
+        let yFactor: CGFloat = hrGraphHeight / ySpan
+        
+        return HStack(alignment: .lastTextBaseline) {
+            
+            ForEach(steps, id: \.id) { step in
+                let yValue = CGFloat(step.count) * yFactor
+                
+                VStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
+                        .frame(height: CGFloat(yValue))
+                        .overlay(
+                            Text("\(step.count)")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundColor(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
+                                .offset(y: -20),
+                            alignment: .top
+                        )
+                        .frame(height: hrGraphHeight, alignment: .bottom)
+                    
+                    Text("\(step.date, formatter: Self.dateFormatter)")
+                        .font(.caption)
+                        .foregroundColor(Color.black)
+                }
+                .frame(width: 42)
+            }
+        }
+        .padding(.vertical, 30)
+    }
+    
+}
+
+
+struct stepsChartCeilingText: View {
+    
+    var body: some View {
         Text("Your Step Count Ceiling this week: 2000 / day") // TODO: Replace hardcoded 2000 with actual goal set by user
             .font(.subheadline)
             .fontWeight(.bold)
             .foregroundColor(Color.black)
     }
     
-    var stepsChart: some View {
-        let max = CGFloat(steps.map(\.count).max() ?? 0)
-        let min: CGFloat = 0
-        let ySpan: CGFloat = max - min
-        let yFactor: CGFloat = hrGraphHeight / ySpan
-
-            return HStack(alignment: .lastTextBaseline) {
-
-                ForEach(steps, id: \.id) { step in
-                        let yValue = CGFloat(step.count) * yFactor
-
-                        VStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
-                                .frame(height: CGFloat(yValue))
-                                .overlay(
-                                    Text("\(step.count)")
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
-                                        .offset(y: -20),
-                                    alignment: .top
-                                )
-                                .frame(height: hrGraphHeight, alignment: .bottom)
-
-                            Text("\(step.date, formatter: Self.dateFormatter)")
-                                .font(.caption)
-                                .foregroundColor(Color.black)
-                        }
-                        .frame(width: 42)
-                    }
-        }
-        .padding(.vertical, 30)
-    }
-    
-    private var weeks: [(key: Date, value: [HeartRateDateGroup])]
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -261,7 +356,7 @@ struct TrackMeHome_Previews: PreviewProvider {
 
     static var previews: some View {
 
-     let now = Date()
+    let now = Date()
             let startOfPreviousWeek = now.addingTimeInterval(-60*60*24*7).startOfWeek(using: .autoupdatingCurrent)
 
             let heartRates: [HeartRate] = (0..<2).flatMap { weekOffset in
@@ -297,10 +392,12 @@ struct TrackMeHome_Previews: PreviewProvider {
 //
 //        ]
 
-        TrackMeHome(steps: steps, heartRates: heartRates)
+        SummaryTabView(steps: steps, heartRates: heartRates)
 
     }
 }
+
+
 
 // COMMENT OUT UNTIL THE averateHeartRates formulate is corrected.
 //                        Text("Your average heart rate this week:  \(averageHeartRates)")
@@ -315,9 +412,3 @@ struct TrackMeHome_Previews: PreviewProvider {
 //                            .font(.subheadline)
 //                            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
 //                            .padding(.top, 20.0)
-
-extension Date {
-    func startOfWeek(using calendar: Calendar) -> Date {
-        calendar.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: self).date!
-    }
-}

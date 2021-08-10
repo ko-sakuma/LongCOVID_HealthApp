@@ -1,11 +1,7 @@
-//
-//  NotificationSettingView.swift
-//  NotificationsTest
-//
-//  Created by Ko Sakuma on 04/07/2021.
-//
 
 import SwiftUI
+
+// TODO: refacotor 
 
 // VIEW
 struct NotificationSettingsView: View {
@@ -54,12 +50,6 @@ struct NotificationSettingsView: View {
 
 }
 
-struct NotificationSettingsView_Previews: PreviewProvider {
-  static var previews: some View {
-    NotificationSettingsView()
-  }
-}
-
 struct SettingRowView: View {
   var setting: String
   var enabled: Bool
@@ -78,3 +68,13 @@ struct SettingRowView: View {
     .padding()
   }
 }
+
+
+
+
+struct NotificationSettingsView_Previews: PreviewProvider {
+  static var previews: some View {
+    NotificationSettingsView()
+  }
+}
+

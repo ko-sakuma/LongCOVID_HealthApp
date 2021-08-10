@@ -1,9 +1,3 @@
-//
-//  HeartRate.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 28/06/2021.
-//
 
 import Foundation
 import HealthKit

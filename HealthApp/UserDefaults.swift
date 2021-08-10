@@ -1,9 +1,3 @@
-//
-//  UserDefaults.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 12/07/2021.
-//
 
 import Foundation
 

@@ -100,8 +100,8 @@ class HealthStore {
         let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
         print(heartRateType)
 
-        // startDate: defines the past 2 years (730 days)
-        let startDate = Calendar.current.date(byAdding: .day, value: -730, to: Date())
+        // startDate: defines the past 1 year (365 days)
+        let startDate = Calendar.current.date(byAdding: .day, value: -365, to: Date())
 
         // anchorDate: defines what time a day actually starts at. mondayAt12AM() is my func, defined above.
         let anchorDate = Date.mondayAt12AM()
@@ -115,7 +115,7 @@ class HealthStore {
         // query = create a statistics collection query that would include what I want, as defined above.
         // NOTE: HKStatisticsCollectionQuery is useful for graphs; but HKStatisticsQuery, not as much.
         sampleQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: -1, sortDescriptors: nil, resultsHandler: { (_: HKSampleQuery, samples: [HKSample]?, _: Error?) in
-            completion(Array(samples ?? []))
+            completion(Array(samples!))
         })
 
 //        sampleQuery = HKSampleQuery(sampleType: heartRateType, predicate: predicate, limit: -1, sortDescriptors: nil, resultsHandler: { (_: HKSampleQuery, samples: [HKSample]?, _: Error?) in
