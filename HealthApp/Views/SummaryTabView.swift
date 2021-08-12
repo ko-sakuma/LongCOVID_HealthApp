@@ -68,7 +68,18 @@ struct SummaryTabView: View {
     init(steps: [Step], heartRates: [HeartRate]) {
         self.steps = steps
         self.heartRates = heartRates
-
+        
+        var stepsWeeks = [StepsWeek]()
+        var weekSteps = [Step]()
+        for step in steps {
+            if weekSteps.count < 7 {
+                weekSteps.append(step)
+            } else {
+                stepsWeeks.append(StepsWeek(steps: weekSteps))
+                weekSteps.removeAll()
+            }
+        }
+        
         if heartRates.isEmpty {
             self.heartRateDateGroups = []
             self.weeks = []
@@ -109,7 +120,7 @@ struct SummaryTabView: View {
                 group.date.startOfWeek(using: calendar)
             }
             .sorted(by: { $0.key < $1.key })
-            self.weeks = weeks
+            self.weeks = weeks.reversed()
             
             // Calculate the min, max, ...
             maxHeartRates = heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) })
@@ -150,20 +161,20 @@ struct SummaryTabView: View {
 
     var heartRateChart: some View {
         // lazyHGrid here
-        ScrollView(.horizontal) {
-        LazyHStack {
-//        TabView(selection: $selectedHeartRateDay) {
+//        ScrollView(.horizontal) {
+//        LazyHStack {
+        TabView(selection: $selectedHeartRateDay) {
 //            ForEach(weeks, id: \.key) { (date, week) in
-            if weeks.isEmpty {
-                EmptyView()
-            } else {
+//            if weeks.isEmpty {
+//                EmptyView()
+//            } else {
                 ForEach(weeks, id: \.key) { (date, week) in
                     heartRateChartWeek(week)
                 }
-            }
+//            }
         }
-        }
-//        .tabViewStyle(PageTabViewStyle())
+//        }
+        .tabViewStyle(PageTabViewStyle())
         .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
     }
 
@@ -171,16 +182,19 @@ struct SummaryTabView: View {
         HStack(alignment: .bottom) {
             ForEach(week, id: \.id) { group in
                 VStack {
+                    Text(String(describing: group.maxHR))
+                        .offset(y: 20)
+                    
                     ZStack(alignment: .bottom) {
 
-//                        let heartRate = group.heartRates[0]
-                        ForEach(group.heartRates, id: \.id) { heartRate in
-                            let yValue = (CGFloat(heartRate.count) - min) * yFactor
+                        ForEach(group.ranges, id: \.id) { heartRate in
+                            let yValue = (CGFloat(heartRate.averageHR) - min) * yFactor
+                            let height = CGFloat(heartRate.deltaHR) * yFactor
                             RoundedRectangle(cornerRadius: sampleSize/2)
                                 .fill(Color(.systemPink))
 //                                .overlay(Text(String(describing: heartRate.count))) // KEEP
-                                .offset(x: 0, y: (sampleSize / 2) - yValue )
-                                .frame(width: sampleSize, height: sampleSize)
+                                .offset(x: 0, y: (height / 2) - yValue )
+                                .frame(width: sampleSize, height: height)
                                 .frame(maxHeight: .infinity, alignment: .bottom)
                         }
 
@@ -189,6 +203,7 @@ struct SummaryTabView: View {
                     .frame(height: hrGraphHeight)
 
                     Text("\(group.date, formatter: Self.dateFormatter)")
+                        .offset(y: -20)
                         .font(.caption)
                         .foregroundColor(Color.gray)
                     
@@ -252,6 +267,12 @@ struct StepsChart: View {
 
         return HStack(alignment: .lastTextBaseline) {
 
+            
+            // TODO: TabView
+            
+//            TabView {
+                
+          
             ForEach(steps, id: \.id) { step in
                 let yValue = CGFloat(step.count) * yFactor
 
@@ -275,6 +296,11 @@ struct StepsChart: View {
                 }
                 .frame(width: 42)
             }
+                
+//
+//            }
+//            tabViewStyle(PageTabViewStyle())
+            
         }
         .padding(.vertical, 30)
     }
