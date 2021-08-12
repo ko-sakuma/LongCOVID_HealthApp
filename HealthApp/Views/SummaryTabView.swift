@@ -28,8 +28,10 @@ struct SummaryTabView: View {
                     VStack(alignment: .leading) {
 
                         // STEP COUNT SECTION
-                        stepsChartTitle()
-                        ScrollView(.horizontal) { stepsChart(steps: steps, heartRates: heartRates, heartRateDateGroups: heartRateDateGroups) }
+                        StepsChartTitle()
+                        ScrollView(.horizontal) {
+                            StepsChart(steps: steps)
+                        }
                         stepsChartCeilingText()
 
                         // HEART RATE SECTION
@@ -70,6 +72,10 @@ struct SummaryTabView: View {
         if heartRates.isEmpty {
             self.heartRateDateGroups = []
             self.weeks = []
+            maxHeartRates = Int.min
+            minHeartRates = Int.max
+            min = 0
+            max = 0
         } else {
             var groups = [HeartRateDateGroup]()
             var date = heartRates[0].date
@@ -104,30 +110,34 @@ struct SummaryTabView: View {
             }
             .sorted(by: { $0.key < $1.key })
             self.weeks = weeks
+            
+            // Calculate the min, max, ...
+            maxHeartRates = heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) })
+            minHeartRates = heartRates.map { $0.count }.reduce( Int.max, { Swift.min($0, $1) })
+            min = CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).min() ?? 0)
+            max =  CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).max() ?? 0)
         }
+        
+        ySpan = max - min
+        yFactor = ((hrGraphHeight - sampleSize) / ySpan)
     }
-
-
-    // MARK: - Steps chart related
-    var totalSteps: Int { steps.map { $0.count }.reduce(0, +) }
-    var totalHeartRates: Int { heartRates.map { $0.count }.reduce(0, +) }
 
 
     // MARK: - Heart Rate Chart related
     private var weeks: [(key: Date, value: [HeartRateDateGroup])]
 
-    var maxHeartRates: Int { heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) }) }
-    var minHeartRates: Int { heartRates.map { $0.count }.reduce( Int.max, { Swift.min($0, $1) }) }
+    let maxHeartRates: Int
+    let minHeartRates: Int
 
     let hrGraphHeight: CGFloat = 260
 
     let sampleSize: CGFloat = 40
 
-    var min: CGFloat { CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).min() ?? 0) }
-    var max: CGFloat {  CGFloat(heartRateDateGroups.flatMap(\.heartRates).map(\.count).max() ?? 0) }
+    let min: CGFloat
+    let max: CGFloat
 
-    var ySpan: CGFloat { max - min }
-    var yFactor: CGFloat { ((hrGraphHeight - sampleSize) / ySpan) }
+    let ySpan: CGFloat
+    let yFactor: CGFloat
 
     var heartRateChartTitle: some View {
         (Text(Image(systemName: "heart.fill")) + Text(" Heart Rates"))
@@ -140,12 +150,20 @@ struct SummaryTabView: View {
 
     var heartRateChart: some View {
         // lazyHGrid here
-        TabView(selection: $selectedHeartRateDay) {
-            ForEach(weeks, id: \.key) { (date, week) in
-                heartRateChartWeek(week)
+        ScrollView(.horizontal) {
+        LazyHStack {
+//        TabView(selection: $selectedHeartRateDay) {
+//            ForEach(weeks, id: \.key) { (date, week) in
+            if weeks.isEmpty {
+                EmptyView()
+            } else {
+                ForEach(weeks, id: \.key) { (date, week) in
+                    heartRateChartWeek(week)
+                }
             }
         }
-        .tabViewStyle(PageTabViewStyle())
+        }
+//        .tabViewStyle(PageTabViewStyle())
         .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
     }
 
@@ -155,6 +173,7 @@ struct SummaryTabView: View {
                 VStack {
                     ZStack(alignment: .bottom) {
 
+//                        let heartRate = group.heartRates[0]
                         ForEach(group.heartRates, id: \.id) { heartRate in
                             let yValue = (CGFloat(heartRate.count) - min) * yFactor
                             RoundedRectangle(cornerRadius: sampleSize/2)
@@ -172,6 +191,8 @@ struct SummaryTabView: View {
                     Text("\(group.date, formatter: Self.dateFormatter)")
                         .font(.caption)
                         .foregroundColor(Color.gray)
+                    
+                    // TODO: SHOW max and min hr of the day
                 }
             }
         }
@@ -200,7 +221,7 @@ extension Date {
 
 
 
-struct stepsChartTitle:  View {
+struct StepsChartTitle:  View {
 
     var body: some View {
         (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
@@ -209,16 +230,13 @@ struct stepsChartTitle:  View {
             .fontWeight(.bold)
             .multilineTextAlignment(.leading)
     }
-
 }
 
-struct stepsChart: View {
+struct StepsChart: View {
 
     let steps: [Step]
-    let heartRates: [HeartRate]
-    let heartRateDateGroups: [HeartRateDateGroup]
 
-    let hrGraphHeight: CGFloat = 260
+    let graphHeight: CGFloat = 260
 
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -230,7 +248,7 @@ struct stepsChart: View {
         let max = CGFloat(steps.map(\.count).max() ?? 0)
         let min: CGFloat = 0
         let ySpan: CGFloat = max - min
-        let yFactor: CGFloat = hrGraphHeight / ySpan
+        let yFactor: CGFloat = graphHeight / ySpan
 
         return HStack(alignment: .lastTextBaseline) {
 
@@ -249,7 +267,7 @@ struct stepsChart: View {
                                 .offset(y: -20),
                             alignment: .top
                         )
-                        .frame(height: hrGraphHeight, alignment: .bottom)
+                        .frame(height: graphHeight, alignment: .bottom)
 
                     Text("\(step.date, formatter: Self.dateFormatter)")
                         .font(.caption)
