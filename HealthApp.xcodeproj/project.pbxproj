@@ -34,6 +34,7 @@
 		08A79CEB26934C0F00A88E30 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CEA26934C0F00A88E30 /* Task.swift */; };
 		08A79CED26934F5D00A88E30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CEC26934F5D00A88E30 /* AppDelegate.swift */; };
 		08A79CF026935EB400A88E30 /* UpdateMeWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CEF26935EB400A88E30 /* UpdateMeWatchView.swift */; };
+		08CCE17426C2DDC600DDC665 /* Experiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CCE17326C2DDC600DDC665 /* Experiment.swift */; };
 		08F103342680E12E0017E6F9 /* HealthAppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F103332680E12E0017E6F9 /* HealthAppMain.swift */; };
 		08F103382680E12F0017E6F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08F103372680E12F0017E6F9 /* Assets.xcassets */; };
 		08F1033B2680E12F0017E6F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08F1033A2680E12F0017E6F9 /* Preview Assets.xcassets */; };
@@ -149,6 +150,7 @@
 		08A79CEA26934C0F00A88E30 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		08A79CEC26934F5D00A88E30 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08A79CEF26935EB400A88E30 /* UpdateMeWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMeWatchView.swift; sourceTree = "<group>"; };
+		08CCE17326C2DDC600DDC665 /* Experiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experiment.swift; sourceTree = "<group>"; };
 		08E66936268A27A700EEA9F4 /* HeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRate.swift; sourceTree = "<group>"; };
 		08F103302680E12E0017E6F9 /* HealthApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08F103332680E12E0017E6F9 /* HealthAppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppMain.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				08F103332680E12E0017E6F9 /* HealthAppMain.swift */,
 				08A79CEC26934F5D00A88E30 /* AppDelegate.swift */,
 				08921EA0269C727F003D0AB1 /* UserDefaults.swift */,
+				08CCE17326C2DDC600DDC665 /* Experiment.swift */,
 				08F10367268102DD0017E6F9 /* Views */,
 				08A79CDB26934BB200A88E30 /* Managers */,
 				08F103642680F64C0017E6F9 /* Models */,
@@ -720,6 +723,7 @@
 				08A79CE726934C0300A88E30 /* CreateTaskView.swift in Sources */,
 				08A79CE126934BC700A88E30 /* NotificationManager.swift in Sources */,
 				08F103342680E12E0017E6F9 /* HealthAppMain.swift in Sources */,
+				08CCE17426C2DDC600DDC665 /* Experiment.swift in Sources */,
 				08A79CEB26934C0F00A88E30 /* Task.swift in Sources */,
 				08A79CE826934C0300A88E30 /* TargetsTabView.swift in Sources */,
 			);
