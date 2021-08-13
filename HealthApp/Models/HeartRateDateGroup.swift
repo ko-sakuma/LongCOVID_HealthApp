@@ -61,8 +61,3 @@ extension HeartRateValueRange {
 }
 
 
-
-struct StepsWeek: Identifiable {
-    var id = UUID()
-    let steps: [Step]
-}

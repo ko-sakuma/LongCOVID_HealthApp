@@ -29,17 +29,19 @@ struct SummaryTabView: View {
 
                         // STEP COUNT SECTION
                         StepsChartTitle()
-                        ScrollView(.horizontal) {
-                            StepsChart(steps: steps)
-                        }
-                        stepsChartCeilingText()
-
+                        StepsChart(steps: steps)
+                        StepsChartCeilingText()
+                    
+                        Spacer()
+                        
                         // HEART RATE SECTION
                         heartRateChartTitle
+                        Spacer()
+                        heartRateChartDescription
                         heartRateChart
                         heartRateChartCeilingText
                     }
-                    .background(Color(.white))
+//                    .background(Color(.white))
                     .cornerRadius(10)
                     .padding(10)
 
@@ -64,22 +66,28 @@ struct SummaryTabView: View {
         }
     }
 
-    // MARK: - Initialiser that groups the Heart Rate samples by day
+    // MARK: - Initialiser that groups Steps & Heart Rate by day and week
     init(steps: [Step], heartRates: [HeartRate]) {
         self.steps = steps
         self.heartRates = heartRates
         
+        // Group daily steps data by week
         var stepsWeeks = [StepsWeek]()
         var weekSteps = [Step]()
+        
+        
         for step in steps {
             if weekSteps.count < 7 {
                 weekSteps.append(step)
             } else {
                 stepsWeeks.append(StepsWeek(steps: weekSteps))
                 weekSteps.removeAll()
+                weekSteps.append(step) //new
+                
             }
         }
         
+        // Group heart rate
         if heartRates.isEmpty {
             self.heartRateDateGroups = []
             self.weeks = []
@@ -109,6 +117,8 @@ struct SummaryTabView: View {
 
                     // Add the new record
                     heartRates.append(heartRate)
+                    
+//                    print(heartRate) // good, prints a lot of things
                 }
             }
 
@@ -158,7 +168,18 @@ struct SummaryTabView: View {
             .multilineTextAlignment(.leading)
             .position(.init(x: 80, y: 30))
     }
+    
+    var heartRateChartDescription: some View {
+        
+    Text("Try to keep your heart rate below the target😊 You know you are doing great if you are seeing many Greens!")
+        .foregroundColor(Color(.systemGray))
+        .lineLimit(5)
+        .multilineTextAlignment(.leading)
+        .frame(width: 380, height: 100)
 
+    }
+    
+    
     var heartRateChart: some View {
         // lazyHGrid here
 //        ScrollView(.horizontal) {
@@ -183,15 +204,20 @@ struct SummaryTabView: View {
             ForEach(week, id: \.id) { group in
                 VStack {
                     Text(String(describing: group.maxHR))
+                        .foregroundColor(group.maxHR > 120 ? Color(.systemPink) :Color(.systemGreen))
+                        .fontWeight(.bold)
+                        // TODO: replace 120 with actual threshold set by user
                         .offset(y: 20)
-                    
+                        
+        
                     ZStack(alignment: .bottom) {
 
                         ForEach(group.ranges, id: \.id) { heartRate in
                             let yValue = (CGFloat(heartRate.averageHR) - min) * yFactor
                             let height = CGFloat(heartRate.deltaHR) * yFactor
                             RoundedRectangle(cornerRadius: sampleSize/2)
-                                .fill(Color(.systemPink))
+//                                .fill(Color(.systemPink))
+                                .fill(group.maxHR > 120 ? Color(.systemPink) :Color(.systemGreen))
 //                                .overlay(Text(String(describing: heartRate.count))) // KEEP
                                 .offset(x: 0, y: (height / 2) - yValue )
                                 .frame(width: sampleSize, height: height)
@@ -213,16 +239,13 @@ struct SummaryTabView: View {
         }
     }
 
-
-
     var heartRateChartCeilingText: some View {
         Text("Your Heart Rate ceiling this week: 70")
             .font(.subheadline)
+            .fontWeight(.bold)
             .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
             .padding(.top, 20.0)
     }
-
-
 
 }
 
@@ -235,6 +258,7 @@ extension Date {
 
 
 
+// MARK: - STEPS related
 
 struct StepsChartTitle:  View {
 
@@ -244,77 +268,103 @@ struct StepsChartTitle:  View {
             .foregroundColor(Color(.systemRed))
             .fontWeight(.bold)
             .multilineTextAlignment(.leading)
+        
+        Text("Try to keep your daily steps below the target😊 You know you are doing great if you are seeing many Green bars!")
+            .foregroundColor(Color(.systemGray))
+            .lineLimit(5)
+            .multilineTextAlignment(.leading)
+            .frame(width: 390, height: 100)
     }
 }
 
 struct StepsChart: View {
-
+    
     let steps: [Step]
+    
+//    var weeks: [(key: Date, value: [HeartRateDateGroup])]
 
+    var body: some View {
+    
+        TabView() {
+//            // wrong here: sth to do with weekly grouping should be here
+//            ForEach(weeks, id: \.key) {(date, week) in
+            ForEach(steps, id: \.id) { step in
+                stepsChartWeek(steps: steps)
+            }
+            
+        }
+        .tabViewStyle(PageTabViewStyle())
+        .frame(width: 390, height: 300)
+        
+    }
+    
+
+}
+    
+
+struct stepsChartWeek: View {
+    
+    let steps: [Step]
     let graphHeight: CGFloat = 260
-
+    
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM"
         return formatter
     }()
-
+    
     var body: some View {
         let max = CGFloat(steps.map(\.count).max() ?? 0)
         let min: CGFloat = 0
         let ySpan: CGFloat = max - min
         let yFactor: CGFloat = graphHeight / ySpan
+        
+        // COMPLETED STEP GRAPH VIEW FOR A WEEK
+        HStack(alignment: .lastTextBaseline) {
 
-        return HStack(alignment: .lastTextBaseline) {
-
-            
-            // TODO: TabView
-            
-//            TabView {
-                
-          
+            // TODO: instead of steps, should group here?
             ForEach(steps, id: \.id) { step in
-                let yValue = CGFloat(step.count) * yFactor
+                    let yValue = CGFloat(step.count) * yFactor
+                        
+                        VStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
+                                .frame(height: CGFloat(yValue))
+                                .overlay(
+                                    Text("\(step.count)")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
+                                        .offset(y: -20),
+                                    alignment: .top
+                                )
+                                .frame(height: graphHeight, alignment: .bottom)
 
-                VStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
-                        .frame(height: CGFloat(yValue))
-                        .overlay(
-                            Text("\(step.count)")
+                            Text("\(step.date, formatter: Self.dateFormatter)")
                                 .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(step.count > 2000 ? Color(.systemOrange) :Color(.systemGreen))
-                                .offset(y: -20),
-                            alignment: .top
-                        )
-                        .frame(height: graphHeight, alignment: .bottom)
-
-                    Text("\(step.date, formatter: Self.dateFormatter)")
-                        .font(.caption)
-                        .foregroundColor(Color.black)
+                                .foregroundColor(Color.black)
+                        }
+                        .frame(width: 42)
+                    
                 }
-                .frame(width: 42)
-            }
-                
-//
-//            }
-//            tabViewStyle(PageTabViewStyle())
-            
+
+
         }
         .padding(.vertical, 30)
+        
+        
     }
-
 }
+    
 
 
-struct stepsChartCeilingText: View {
+struct StepsChartCeilingText: View {
 
     var body: some View {
         Text("Your Step Count Ceiling this week: 2000 / day") // TODO: Replace hardcoded 2000 with actual goal set by user
             .font(.subheadline)
             .fontWeight(.bold)
-            .foregroundColor(Color.black)
+            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
     }
 
 }

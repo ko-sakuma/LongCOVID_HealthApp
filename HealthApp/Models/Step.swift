@@ -6,3 +6,9 @@ struct Step: Identifiable {
     let count: Int
     let date: Date
 }
+
+struct StepsWeek: Identifiable {
+    var id = UUID()
+    let steps: [Step]
+    
+}
