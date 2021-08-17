@@ -5,21 +5,12 @@ struct SummaryTabView: View {
 
     // Get the user's default calendar preference (week starts from Mon/Sun)
     @Environment(\.calendar) private var calendar
-    @State private var selectedHeartRateDay: Date = .distantPast  //play around with this to align date order
     
     @State var showStepsChartView = false
 
-    let steps: [Step]
+    let stepsWeeks: [StepsWeek]
     let heartRates: [HeartRate]
-    let heartRateDateGroups: [HeartRateDateGroup]
-
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM"
-        return formatter
-    }()
-
-
+    
     var body: some View {
 
         NavigationView {
@@ -55,20 +46,15 @@ struct SummaryTabView: View {
                         
                         
 //                       // STEP COUNT SECTION
-                        StepsChartView(steps: steps)
+                        if !stepsWeeks.isEmpty {
+                            StepsChartView(stepsWeeks: stepsWeeks)
+                        }
                         
-//                        StepsChartTitle()
-//                        StepsChart(steps: steps)
-//                        StepsChartCeilingText()
-//
                         Spacer()
                         
-                        // HEART RATE SECTION
-                        heartRateChartTitle
-                        Spacer()
-                        heartRateChartDescription
-                        heartRateChart
-                        heartRateChartCeilingText
+                        if !heartRates.isEmpty {
+                            HeartRateChartView(heartRates: heartRates)
+                        }
                     }
 //                    .background(Color(.white))
                     .cornerRadius(10)
@@ -88,36 +74,50 @@ struct SummaryTabView: View {
                 }
 
         }
-        .onFirstAppear {
-            DispatchQueue.main.async {
-                selectedHeartRateDay = weeks.last?.key ?? .distantPast
-            }
-        }
     }
 
     // MARK: - Initialiser that groups Steps & Heart Rate by day and week
     init(steps: [Step], heartRates: [HeartRate]) {
-        self.steps = steps
-        self.heartRates = heartRates
-        
         // Group daily steps data by week
+        
         var stepsWeeks = [StepsWeek]()
-        var weekSteps = [Step]()
-     
-        // NEED date??
+        var weekSteps = [Step]() // create an empty array, which I can later insert max 7 days worth of data
         
-            for step in steps {
-                if weekSteps.count <  7 {
-                    weekSteps.append(step)
-                } else {
-                    weekSteps.removeAll()
+        let calendar = Calendar.current
+        
+        for step in steps {
+            // extract the weekday (monday..friday)
+            if let weekday = calendar.dateComponents([.weekday], from: step.date).weekday,
+               weekday != calendar.firstWeekday { // Detect First week day
+                // if not weekday then append (weekend)
+                weekSteps.append(step)
+            } else {
+                // if it is the first day of the week, then just build it up
+                if !weekSteps.isEmpty {
                     stepsWeeks.append(StepsWeek(steps: weekSteps))
-                    weekSteps.append(step) //new
-
+                    weekSteps.removeAll()
                 }
+                weekSteps.append(step) //new
             }
-
+        }
+        // Add the last one
+        if !weekSteps.isEmpty {
+            stepsWeeks.append(StepsWeek(steps: weekSteps))
+        }
         
+        self.stepsWeeks = stepsWeeks
+        
+        self.heartRates = heartRates
+    }
+}
+
+
+struct HeartRateChartView: View {
+    
+    let heartRateDateGroups: [HeartRateDateGroup]
+    @State var selectedHeartRateDay: Int
+    
+    init(heartRates: [HeartRate]) {
         // Group heart rate
         if heartRates.isEmpty {
             self.heartRateDateGroups = []
@@ -149,7 +149,6 @@ struct SummaryTabView: View {
                     // Add the new record
                     heartRates.append(heartRate)
                     
-//                    print(heartRate) // good, prints a lot of things
                 }
             }
 
@@ -158,10 +157,10 @@ struct SummaryTabView: View {
             groups.append(group)
             self.heartRateDateGroups = groups
             let weeks  = Dictionary(grouping: groups) { group in
-                group.date.startOfWeek(using: calendar)
+                Int(group.date.startOfWeek(using: calendar).timeIntervalSince1970) // * 1000 (miliseconds)
             }
             .sorted(by: { $0.key < $1.key })
-            self.weeks = weeks.reversed()
+            self.weeks = weeks
             
             // Calculate the min, max, ...
             maxHeartRates = heartRates.map { $0.count }.reduce( Int.min, { Swift.max($0, $1) })
@@ -172,11 +171,12 @@ struct SummaryTabView: View {
         
         ySpan = max - min
         yFactor = ((hrGraphHeight - sampleSize) / ySpan)
+        
+        selectedHeartRateDay = weeks.last?.key ?? 0
     }
 
-
     // MARK: - Heart Rate Chart related
-    private var weeks: [(key: Date, value: [HeartRateDateGroup])]
+    private var weeks: [(key: Int, value: [HeartRateDateGroup])]
 
     let maxHeartRates: Int
     let minHeartRates: Int
@@ -190,6 +190,17 @@ struct SummaryTabView: View {
 
     let ySpan: CGFloat
     let yFactor: CGFloat
+    
+    var body: some View {
+        VStack {
+            // HEART RATE SECTION
+            heartRateChartTitle
+            Spacer()
+            heartRateChartDescription
+            heartRateChart
+            heartRateChartCeilingText
+        }
+    }
 
     var heartRateChartTitle: some View {
         (Text(Image(systemName: "heart.fill")) + Text(" Heart Rates"))
@@ -201,24 +212,19 @@ struct SummaryTabView: View {
     }
     
     var heartRateChartDescription: some View {
-        
-    Text("Try to keep your heart rate below 70😊 You know you are doing great if you are seeing many Greens!")
-        .foregroundColor(Color(.systemGray))
-        .lineLimit(5)
-        .multilineTextAlignment(.leading)
-        .frame(width: 380, height: 100)
-
+        Text("Try to keep your heart rate below 70😊 You know you are doing great if you are seeing many Greens!")
+            .foregroundColor(Color(.systemGray))
+            .lineLimit(5)
+            .multilineTextAlignment(.leading)
+            .frame(width: 380, height: 100)
     }
-    
     
     var heartRateChart: some View {
 
         TabView(selection: $selectedHeartRateDay) {
-
-                ForEach(weeks, id: \.key) { (date, week) in
-                    heartRateChartWeek(week)
-                }
-
+            ForEach(weeks, id: \.key) { (date, week) in
+                heartRateChartWeek(week)
+            }
         }
         .tabViewStyle(PageTabViewStyle())
         .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
@@ -263,12 +269,16 @@ struct SummaryTabView: View {
                         .offset(y: -20)
                         .font(.caption)
                         .foregroundColor(Color.gray)
-                    
-                    // TODO: SHOW max and min hr of the day
                 }
             }
         }
     }
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM"
+        return formatter
+    }()
 
     var heartRateChartCeilingText: some View {
         Text("Your Heart Rate ceiling this week: 70")
@@ -292,12 +302,11 @@ extension Date {
 // MARK: - STEPS related
 struct StepsChartView: View {
     
-    let steps: [Step]
-    let weekSteps = [Step]()
+    let stepsWeeks: [StepsWeek]
     
     var body: some View {
         StepsChartTitle()
-        StepsChart(steps: steps)
+        StepsChart(stepsWeeks: stepsWeeks)
         StepsChartCeilingText()
     }
     
@@ -324,30 +333,28 @@ struct StepsChartTitle:  View {
 
 struct StepsChart: View {
     
-    let steps: [Step]
-    
-//    var weeks: [(key: Date, value: [HeartRateDateGroup])]
+    let stepsWeeks: [StepsWeek]
 
-    var body: some View {
+    @State var selectedID: Int
     
-        TabView() {
-//            // wrong here: sth to do with weekly grouping should be here
-//            ForEach(weekSteps, id: \.key) {(date, week) in
-            ForEach(steps, id: \.id) { step in
-                stepsChartWeek(steps: steps)
+    init(stepsWeeks: [StepsWeek]) {
+        self.stepsWeeks = stepsWeeks
+        self.selectedID = stepsWeeks.last!.id
+    }
+    
+    var body: some View {
+        TabView(selection: $selectedID) {
+            ForEach(stepsWeeks, id: \.id) { (week) in
+                StepsChartWeek(steps: week.steps).tag(week.id)
             }
-            
         }
         .tabViewStyle(PageTabViewStyle())
         .frame(width: 390, height: 300)
-        
     }
-    
-
 }
     
 
-struct stepsChartWeek: View {
+struct StepsChartWeek: View {
     
     let steps: [Step]
     let graphHeight: CGFloat = 260

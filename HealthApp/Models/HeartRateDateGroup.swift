@@ -23,7 +23,7 @@ extension HeartRateDateGroup {
         var lastHeartRateInRange = sortedHeartRates[0]
         
         var maxHR: Int = 0
-        var minHR: Int = 0
+        var minHR: Int = Int.max
         
         for heartRate in sortedHeartRates {
             let newRange = (heartRate.count - firstHeartRateInRange.count) > threshold
@@ -41,8 +41,8 @@ extension HeartRateDateGroup {
             }
             
             // TODO: MIN
-            if heartRate.count > minHR {
-               
+            if heartRate.count < minHR {
+                minHR = heartRate.count
             }
             
         }

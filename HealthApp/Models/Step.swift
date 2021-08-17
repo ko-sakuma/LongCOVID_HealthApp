@@ -8,7 +8,18 @@ struct Step: Identifiable {
 }
 
 struct StepsWeek: Identifiable {
-    var id = UUID()
+    var id: Int {
+        Int( steps.first?.date.timeIntervalSince1970 ?? 0 )
+    }
     let steps: [Step]
-    
 }
+
+//extension StepsWeek {
+//    var firstDate: Date? {
+//        return steps.first?.date
+//    }
+//
+//    var lastDate: Date? {
+//        return steps.last?.date
+//    }
+//}

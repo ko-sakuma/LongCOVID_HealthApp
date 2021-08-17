@@ -4,16 +4,21 @@ import HealthKit
 
 struct ContentView: View {
 
+    // MARK: - State
+    
     @State private var steps: [Step] = [Step]()
     @State private var heartRates: [HeartRate] = [HeartRate]()
-
     @State private var selection: Tab = .summary
 
+    // MARK: - Type definitions
+    
     enum Tab {
         case summary
         case targets
     }
 
+    // MARK: - Body
+    
     var body: some View {
 
         TabView(selection: $selection) {

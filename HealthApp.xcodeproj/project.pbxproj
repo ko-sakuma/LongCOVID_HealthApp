@@ -273,6 +273,7 @@
 		08A79CDB26934BB200A88E30 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				08F1035E2680E1830017E6F9 /* HealthStore.swift */,
 				08A79CDF26934BC700A88E30 /* LocationManager.swift */,
 				08A79CDD26934BC700A88E30 /* NotificationManager.swift */,
 				08A79CDE26934BC700A88E30 /* TaskManager.swift */,
@@ -333,7 +334,6 @@
 				08A79CDB26934BB200A88E30 /* Managers */,
 				08F103642680F64C0017E6F9 /* Models */,
 				08F103372680E12F0017E6F9 /* Assets.xcassets */,
-				08F1035E2680E1830017E6F9 /* HealthStore.swift */,
 				08F1033C2680E12F0017E6F9 /* Info.plist */,
 				08F103392680E12F0017E6F9 /* Preview Content */,
 			);
