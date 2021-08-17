@@ -7,21 +7,26 @@ struct HeartRateDateGroup: Identifiable {
     let heartRates: [HeartRate] // We might want to display all the data at some point
     let ranges: [HeartRateValueRange]
     let maxHR: Int
+    let minHR: Int
 }
 
 extension HeartRateDateGroup {
     init(date: Date, heartRates: [HeartRate]) {
-        let treshold: Int = 40 // BPM difference
+        let threshold: Int = 40 // BPM difference
         
         var ranges = [HeartRateValueRange]()
+       
         let sortedHeartRates = heartRates.sorted(by: { $0.count < $1.count })
+        
+        // HERE
         var firstHeartRateInRange = sortedHeartRates[0]
         var lastHeartRateInRange = sortedHeartRates[0]
         
         var maxHR: Int = 0
+        var minHR: Int = 0
         
         for heartRate in sortedHeartRates {
-            let newRange = (heartRate.count - firstHeartRateInRange.count) > treshold
+            let newRange = (heartRate.count - firstHeartRateInRange.count) > threshold
             if newRange {
                 ranges.append(HeartRateValueRange(minHR: firstHeartRateInRange.count,
                                                   maxHR: lastHeartRateInRange.count))
@@ -34,12 +39,18 @@ extension HeartRateDateGroup {
             if heartRate.count > maxHR {
                 maxHR = heartRate.count
             }
+            
+            // TODO: MIN
+            if heartRate.count > minHR {
+               
+            }
+            
         }
         // Append the last range
         ranges.append(HeartRateValueRange(minHR: firstHeartRateInRange.count,
                                           maxHR: lastHeartRateInRange.count))
         
-        self.init(date: date, heartRates: heartRates, ranges: ranges, maxHR: maxHR)
+        self.init(date: date, heartRates: heartRates, ranges: ranges, maxHR: maxHR, minHR: minHR)
     }
 }
 
