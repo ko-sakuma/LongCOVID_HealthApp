@@ -5,9 +5,12 @@ import SwiftUI
 
 // VIEW
 struct NotificationSettingsView: View {
-  @ObservedObject var notificationManager = NotificationManager.shared
+    
+    // MARK: - Observed Object
+    @ObservedObject var notificationManager = NotificationManager.shared
 
-  var body: some View {
+    // MARK: - Body
+    var body: some View {
 
         NavigationView {
 
@@ -43,7 +46,7 @@ struct NotificationSettingsView: View {
                     }
                 }
                 .navigationBarTitle("Notifications Status")
-//                .navigationBarTitle("Notifications Status", displayMode: .inline)
+    //                .navigationBarTitle("Notifications Status", displayMode: .inline)
         }
 
   }

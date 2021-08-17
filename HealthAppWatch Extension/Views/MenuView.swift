@@ -4,6 +4,7 @@
 //
 //  Created by Ko Sakuma on 01/07/2021.
 //
+// NOTE: This is for experiments. 
 
 import SwiftUI
 

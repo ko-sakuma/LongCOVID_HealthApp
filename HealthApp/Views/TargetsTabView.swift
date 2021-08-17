@@ -5,10 +5,14 @@ import SwiftUI
 
 struct TargetsTabView: View {
     
+    // MARK: - Observed Object
     @ObservedObject var taskManager = TaskManager.shared
+    
+    // MARK: - State
     @State var showNotificationSettingsUI = false
     @State var showCreateTaskView = false
     
+    // MARK: - Body
     var body: some View {
         
         NavigationView {

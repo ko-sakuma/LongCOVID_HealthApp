@@ -1,26 +1,11 @@
-//
-//  HealthStore.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 21/06/2021.
-//
 
-// Creating this file so that I can wrap around all the features of HKHealthStore inside the HealthStore class
+// NOTE: Creating this file so that I can wrap around all the features of HKHealthStore inside the HealthStore class
 
 import Foundation
 import HealthKit
 import UIKit
 import UserNotifications
 
-extension Date {
-    // using iso8601 format because it is most appropriate for JSON.
-    // this aligns the timestamp on heartRate & stepcount data (HealthStore class) below with Symptom data (JSON)
-    static func mondayAt12AM() -> Date {
-        return Calendar(identifier: .iso8601)
-            .date(from: Calendar(identifier: .iso8601)
-                    .dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
-    }
-}
 
 class HealthStore {
 
@@ -222,4 +207,14 @@ class HealthStore {
         }
     }
 
+}
+
+extension Date {
+    // using iso8601 format because it is most appropriate for JSON.
+    // this aligns the timestamp on heartRate & stepcount data (HealthStore class) below with Symptom data (JSON)
+    static func mondayAt12AM() -> Date {
+        return Calendar(identifier: .iso8601)
+            .date(from: Calendar(identifier: .iso8601)
+                    .dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
+    }
 }

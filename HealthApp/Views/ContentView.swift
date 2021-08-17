@@ -4,21 +4,23 @@ import HealthKit
 
 struct ContentView: View {
 
-    // MARK: - State
+    // MARK: - Environment
+    @EnvironmentObject var symptomJSONManager: SymptomJSONManager
     
+    // MARK: - State
     @State private var steps: [Step] = [Step]()
     @State private var heartRates: [HeartRate] = [HeartRate]()
     @State private var selection: Tab = .summary
 
     // MARK: - Type definitions
-    
     enum Tab {
         case summary
         case targets
+        case symptomsHistoryTab
+        case updateMeTab
     }
 
     // MARK: - Body
-    
     var body: some View {
 
         TabView(selection: $selection) {
@@ -30,6 +32,20 @@ struct ContentView: View {
             TargetsTabView()
                 .tabItem { Label("Targets", systemImage: "target") }
                 .tag(Tab.targets)
+            
+            SymptomHistoryView()
+                .tabItem {
+                    Label("Symptom History", systemImage: "text.badge.plus")
+
+                }
+                .tag(Tab.symptomsHistoryTab)
+                
+
+            UpdateMeView()
+                .tabItem {
+                    Label("Update", systemImage: "plus.circle")
+                }
+                .tag(Tab.updateMeTab)
         }
         .onAppear {
             HealthStore.shared.requestAuthorization { success in
@@ -80,5 +96,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(SymptomJSONManager())
     }
 }

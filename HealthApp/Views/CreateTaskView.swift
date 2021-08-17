@@ -6,8 +6,11 @@ import HealthKit
 // TODO: task -> target
 
 struct CreateTaskView: View {
+    
+    // MARK: - Environment
     @Environment(\.presentationMode) var presentationMode
     
+    // MARK: - State
     @State var taskName: String = ""
     @State var reminderEnabled = false
     @State var selectedTrigger = ReminderType.time
@@ -23,10 +26,11 @@ struct CreateTaskView: View {
     @State private var radius: String = ""
     
 
+    // MARK: - Type definitions
     let triggers = ["Time", "Calendar", "Location", "HeartRateCeiling"] // Heart Rate
     let timeDurations: [Int] = Array(1...59)
     
-    
+    // MARK: - Body
     var body: some View {
         NavigationView {
           Form {
@@ -45,7 +49,7 @@ struct CreateTaskView: View {
                 .padding()
               }
               VStack {
-                TextField("Do my breathing excercise...", text: $taskName)
+                TextField("Type the name of your new target...", text: $taskName)
                   .padding(.vertical)
                 Toggle(isOn: $reminderEnabled) {
                   Text("Set a smart reminder")

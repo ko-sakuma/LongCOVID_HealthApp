@@ -4,6 +4,7 @@
 //
 //  Created by Ko Sakuma on 01/07/2021.
 //
+// NOTE: DONT TOUCH THIS FILE UNLESS PAIRING WITH NotificationController.swift!
 
 import WatchKit
 import SwiftUI
