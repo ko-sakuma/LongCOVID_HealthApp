@@ -30,7 +30,7 @@ struct TargetsTabView: View {
                     .padding()
                 }
             }
-            .navigationBarTitle("Targets")
+            .navigationBarTitle("Goals")
             .toolbar {
                 // left 
                 ToolbarItem(placement: .navigationBarLeading) {

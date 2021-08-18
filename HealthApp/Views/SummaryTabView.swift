@@ -19,7 +19,7 @@ struct SummaryTabView: View {
         NavigationView {
             ScrollView {
 
-                    VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
 //
 //                        Button(action: { showStepsChartView = true} ) {
 //                                                    VStack (alignment: .leading){
@@ -184,7 +184,7 @@ struct HeartRateChartView: View {
     let maxHeartRates: Int
     let minHeartRates: Int
 
-    let hrGraphHeight: CGFloat = 260
+    let hrGraphHeight: CGFloat = 280
 
     let sampleSize: CGFloat = 40
 
@@ -201,7 +201,7 @@ struct HeartRateChartView: View {
             Spacer()
             heartRateChartDescription
             heartRateChart
-            heartRateChartCeilingText
+//            heartRateChartCeilingText
         }
     }
 
@@ -215,7 +215,7 @@ struct HeartRateChartView: View {
     }
     
     var heartRateChartDescription: some View {
-        Text("Try to keep your heart rate below 70😊 You know you are doing great if you are seeing many Greens!")
+        Text("Green means you are meeting your heart rate goal! Your current ceiling is 120.")
             .foregroundColor(Color(.systemGray))
             .lineLimit(5)
             .multilineTextAlignment(.leading)
@@ -224,33 +224,57 @@ struct HeartRateChartView: View {
     
     var heartRateChart: some View {
 
-        TabView(selection: $selectedHeartRateDay) {
-            ForEach(weeks, id: \.key) { (date, week) in
-                heartRateChartWeek(week)
+        HStack {
+            
+            VStack {
+                Text("max")
+                Divider()
+                Text("min")
             }
+            .offset(y: -115)
+            .frame(width: 40)
+            
+            TabView(selection: $selectedHeartRateDay) {
+                ForEach(weeks, id: \.key) { (date, week) in
+                    heartRateChartWeek(week)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle())
+            .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
+            
         }
-        .tabViewStyle(PageTabViewStyle())
-        .frame(height: 300) // I'm hardcoding both chart content's heigth and this height.
     }
 
+        
     func heartRateChartWeek(_ week: [HeartRateDateGroup]) -> some View {
+        
         HStack(alignment: .bottom) {
+            
             ForEach(week, id: \.id) { group in
                 VStack {
+                    
                     Text(String(describing: group.maxHR))
                         .foregroundColor(group.maxHR > 120 ? Color(.systemPink) :Color(.systemGreen))
                         .fontWeight(.bold)
                         // TODO: replace 120 with actual threshold set by user
-                        .offset(y: 20)
+                        .offset(y: 40)
                         
-        
+                    Divider()
+                        .offset(y: 40)
+                    
+                    Text(String(describing: group.minHR)) // minHR here
+                        .foregroundColor(group.minHR > 120 ? Color(.systemPink) :Color(.systemGreen))
+                        .fontWeight(.bold)
+                        .offset(y: 40)
+                        // TODO: replace 120 with actual threshold set by user
+
+                    
                     ZStack(alignment: .bottom) {
 
                         ForEach(group.ranges, id: \.id) { heartRate in
                             let yValue = (CGFloat(heartRate.averageHR) - min) * yFactor
                             let height = CGFloat(heartRate.deltaHR) * yFactor
                             RoundedRectangle(cornerRadius: sampleSize/2)
-//                                .fill(Color(.systemPink))
                                 .fill(group.maxHR > 120 ? Color(.systemPink) :Color(.systemGreen))
 //                                .overlay(Text(String(describing: heartRate.count))) // KEEP
                                 .offset(x: 0, y: (height / 2) - yValue )
@@ -260,16 +284,12 @@ struct HeartRateChartView: View {
 
                     }
                     .padding(.vertical, sampleSize/2)
+                    .offset(y: -40)
                     .frame(height: hrGraphHeight)
                     
-                    Text(String(describing: group.minHR)) // minHR here
-                        .foregroundColor(Color(.systemGray))
-                        .fontWeight(.bold)
-                        // TODO: replace 120 with actual threshold set by user
-                        .offset(y: -20)
 
                     Text("\(group.date, formatter: Self.dateFormatter)")
-                        .offset(y: -20)
+                        .offset(y: -40)
                         .font(.caption)
                         .foregroundColor(Color.gray)
                 }
@@ -310,7 +330,7 @@ struct StepsChartView: View {
     var body: some View {
         StepsChartTitle()
         StepsChart(stepsWeeks: stepsWeeks)
-        StepsChartCeilingText()
+//        StepsChartCeilingText()
     }
     
     
@@ -326,7 +346,7 @@ struct StepsChartTitle:  View {
             .fontWeight(.bold)
             .multilineTextAlignment(.leading)
         
-        Text("Try to keep your daily steps below 2000😊 You know you are doing great if you are seeing many Green bars!")
+        Text("Try to keep your daily steps below 2000😊 Green bar means you are meeting your daily goal!")
             .foregroundColor(Color(.systemGray))
             .lineLimit(5)
             .multilineTextAlignment(.leading)
@@ -336,23 +356,40 @@ struct StepsChartTitle:  View {
 
 struct StepsChart: View {
     
-    let stepsWeeks: [StepsWeek]
-
+    // MARK: - State
     @State var selectedID: Int
+    
+    // MARK: - Type definitions
+    let stepsWeeks: [StepsWeek]
     
     init(stepsWeeks: [StepsWeek]) {
         self.stepsWeeks = stepsWeeks
         self.selectedID = stepsWeeks.last!.id
     }
     
+    // MARK: - Body
     var body: some View {
-        TabView(selection: $selectedID) {
-            ForEach(stepsWeeks, id: \.id) { (week) in
-                StepsChartWeek(steps: week.steps).tag(week.id)
+        
+        HStack {
+            VStack {
+                Divider()
+                Text("Count")
+                    .font(.caption)
+                Divider()
             }
+            .offset(y: -133)
+            .frame(width: 40)
+            
+            TabView(selection: $selectedID) {
+                ForEach(stepsWeeks, id: \.id) { (week) in
+                    StepsChartWeek(steps: week.steps).tag(week.id)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle())
+    //            .frame(width: 390, height: 300)
+            .frame(height: 300)
+            
         }
-        .tabViewStyle(PageTabViewStyle())
-        .frame(width: 390, height: 300)
     }
 }
     
@@ -381,25 +418,39 @@ struct StepsChartWeek: View {
                     let yValue = CGFloat(step.count) * yFactor
                         
                         VStack {
+                            
+                            Divider()
+                              
+                            
+                            Text("\(step.count)")
+                                .font(.footnote)
+                                .fontWeight(.bold)
+                                .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
+//                                .lineLimit(nil)
+//                                .fixedSize(horizontal: false, vertical: true)
+                             
+                            Divider()
+                               
+                    
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
 //                                .frame(height: CGFloat(yValue))
                                 .frame(height: CGFloat(yValue))
-                                .overlay(
-                                    Text("\(step.count)")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
-                                        .offset(y: -20),
-                                    alignment: .top
-                                )
+//                                .overlay(
+//                                    Text("\(step.count)")
+//                                        .font(.caption)
+//                                        .fontWeight(.bold)
+//                                        .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
+//                                        .offset(y: -20),
+//                                    alignment: .top
+//                                )
                                 .frame(height: graphHeight, alignment: .bottom)
 
                             Text("\(step.date, formatter: Self.dateFormatter)")
                                 .font(.caption)
                                 .foregroundColor(Color(.systemGray))
                         }
-                        .frame(width: 42)
+                        .frame(width: 40)
                     
                 }
 

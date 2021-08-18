@@ -30,7 +30,7 @@ struct ContentView: View {
                 .tag(Tab.summary)
 
             TargetsTabView()
-                .tabItem { Label("Targets", systemImage: "target") }
+                .tabItem { Label("Goals", systemImage: "target") }
                 .tag(Tab.targets)
             
             SymptomHistoryView()

@@ -19,6 +19,9 @@ struct SymptomHistoryView: View {
 
     // MARK: - State
     @State var showUpdateMeView = false
+    
+    @State var searchText = ""
+    @State var searching = false
 
     // MARK: - Body
     var body: some View {
@@ -26,9 +29,37 @@ struct SymptomHistoryView: View {
         NavigationView {
 
             ScrollView () {
-                VStack (alignment: .leading) {
 
                 VStack (alignment: .leading) {
+                    
+                    
+                    ZStack {
+                                Rectangle()
+                                    .foregroundColor(Color("LightGray"))
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                    TextField("Search by symptom name", text: $searchText) { startedEditing in
+                                        if startedEditing {
+                                            withAnimation {
+                                                searching = true
+                                            }
+                                        }
+                                    } onCommit: {
+                                        withAnimation {
+                                            searching = false
+                                        }
+                                    }
+                                }
+                                .foregroundColor(.gray)
+                                .padding(.leading, 13)
+                            }
+                                .frame(height: 40)
+                                .cornerRadius(13)
+                                .padding()
+            
+                    
+                    
+                    
                     ForEach(symptomJSONManager.symptomDataArray.reversed()) { lineItem in
                         HStack (alignment: .center) {
 
@@ -53,8 +84,6 @@ struct SymptomHistoryView: View {
                 }
 
 
-
-                }
 
             }
             .navigationTitle("Symptoms")
