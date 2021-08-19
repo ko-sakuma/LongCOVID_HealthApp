@@ -19,3 +19,14 @@ struct SymptomData: Codable, Hashable, Identifiable {
     var symptom: String?
     var timestamp: String?
 }
+
+extension SymptomData {
+    var date: Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let timestampString = timestamp//, let timestamp = TimeInterval(timestampString)
+        else { return nil }
+//        return Date(timeIntervalSince1970: timestamp)
+        return formatter.date(from: timestampString)
+    }
+}

@@ -70,5 +70,3 @@ extension HeartRateValueRange {
         self.deltaHR = maxHR - minHR
     }
 }
-
-
