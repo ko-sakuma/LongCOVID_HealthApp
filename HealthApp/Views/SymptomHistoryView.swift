@@ -8,7 +8,7 @@
 //TODO: if raw WatchConnectivity API turns out to be too complicated, look into using https://github.com/mutualmobile/MMWormhole
 
 
-// WORKING BELOW WITHOUT A SEARCHBAR
+// TODO: make the searchbar working: copy snippet from SymptomDailyView
 
 import SwiftUI
 
@@ -66,7 +66,7 @@ struct SymptomHistoryView: View {
                             Text(lineItem.symptom ?? "")
                                 .font(.title3)
                                 .fontWeight(.bold)
-                                .foregroundColor(Color(.systemOrange))
+                                .foregroundColor(Color(.systemIndigo))
                                 .padding()
 
                             Text(symptomJSONManager.displayTimestamp(lineItem.timestamp ?? ""))

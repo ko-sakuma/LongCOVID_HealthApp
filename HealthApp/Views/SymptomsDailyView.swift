@@ -1,9 +1,5 @@
-//
-//  SymptomsDailyView.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 18/08/2021.
-//
+
+// NOTE: The View of Daily Symptom is here. It appears when the graph bar is tapped in Steps/HeartRate chart.
 
 import SwiftUI
 
@@ -47,27 +43,34 @@ struct SymptomsDailyView: View {
             ScrollView () {
                 
                 VStack (alignment: .leading) {
-                    // Search Bar
-                    searchBar
                     
                     let theSymptoms = symptoms
                     
                     if theSymptoms.isEmpty {
-                        Text("No Symptoms for this Date")
+                        
+                        Text("No records for this day😅🤷‍♀️")
+                            .foregroundColor(Color(.systemGray))
+                            .offset(y: 300)
+                            
                     } else {
+                        searchBar
+                        
                         ForEach(symptoms) { lineItem in
-                            HStack (alignment: .center) {
+                            HStack (alignment: .firstTextBaseline) {
                                 
+                                // TODO: color code based on symptom
                                 Text(lineItem.symptom ?? "")
                                     .font(.title3)
                                     .fontWeight(.bold)
-                                    .foregroundColor(Color(.systemOrange))
+                                    .foregroundColor(Color(.systemIndigo))
                                     .padding()
-                                
+                                    
+                                    
                                 Text(symptomJSONManager.displayTimestamp(lineItem.timestamp ?? ""))
                                     .font(.caption)
                                     .foregroundColor(Color(.systemGray))
                                     .padding()
+                                    
                                 
                             }
                             .overlay(RoundedRectangle(cornerRadius: 8)
@@ -80,7 +83,7 @@ struct SymptomsDailyView: View {
                 
                 
             }
-            .navigationTitle("Symptoms")
+            .navigationTitle("How I felt on this day💭")
             .onAppear(perform: symptomJSONManager.readUserDataFromJSON)
             
             //            .toolbar {
@@ -128,6 +131,7 @@ struct SymptomsDailyView: View {
         .padding()
     }
 }
+
 
 struct SymptomsDailyView_Previews: PreviewProvider {
     static var previews: some View {

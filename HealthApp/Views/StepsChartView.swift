@@ -1,17 +1,14 @@
-//
-//  SwiftUIView.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 18/08/2021.
-//
+
+// NOTE: The Views relating to Steps Chart are all here.
 
 import SwiftUI
 
-// MARK: - STEPS related
 struct StepsChartView: View {
     
+    // MARK: - Type definitions
     let stepsWeeks: [StepsWeek]
     
+    // MARK: - Body
     var body: some View {
         StepsChartTitle()
         StepsChart(stepsWeeks: stepsWeeks)
@@ -22,6 +19,7 @@ struct StepsChartView: View {
 
 struct StepsChartTitle:  View {
     
+    // MARK: - Body
     var body: some View {
         (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
             .font(.title2)
@@ -29,13 +27,14 @@ struct StepsChartTitle:  View {
             .fontWeight(.bold)
             .multilineTextAlignment(.leading)
         
-        Text("Try to keep your daily steps below 2000😊 Green bar means you are meeting your daily goal!")
+        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.stepCeiling))😊 Green bar means you are meeting your daily goal!"))
             .foregroundColor(Color(.systemGray))
             .lineLimit(5)
             .multilineTextAlignment(.leading)
             .frame(width: 390, height: 100)
     }
 }
+
 
 struct StepsChart: View {
     
@@ -59,31 +58,45 @@ struct StepsChart: View {
         let ySpan: CGFloat = max - min
         let yFactor: CGFloat = graphHeight / ySpan
         
-        HStack {
-            VStack {
-                Divider()
-                Text("Count")
-                   
-                Divider()
+//        HStack {
+//            VStack {
+//                // y-axis labels
+//
+//
+////                Divider()
+//
+//
+////                Text("Count")
+////
+//////                Divider()
+////
+//                Text("\(Int(SettingsManager.stepCeiling))")
+//                    .offset(y: SettingsManager.stepCeiling * yFactor)
+//
+//            }
+//            .font(.caption)
+//            .offset(y: -133)
+//            .frame(height: graphHeight, alignment: .bottom)
+////            .frame(width: 40)
+        
+        ZStack{
                 
-                Text("\(Int(SettingsManager.stepCeiling))")
-                    .offset(y: SettingsManager.stepCeiling * yFactor)
-                    
-                   
-            }
-            .font(.caption)
-            .offset(y: -133)
-            .frame(width: 40)
-            
+            // y-label
+            Text("Count")
+                .font(.caption)
+                .fontWeight(.bold)
+                .frame(height: graphHeight, alignment: .top)
+                .offset( x: -179, y: -23)
+
             TabView(selection: $selectedID) {
                 ForEach(stepsWeeks, id: \.id) { (week) in
                     StepsChartWeek(steps: week.steps).tag(week.id)
                 }
             }
             .tabViewStyle(PageTabViewStyle())
-            //            .frame(width: 390, height: 300)
             .frame(height: 300)
         }
+//
         .onChange(of: selectedID) { id in
             if let week = stepsWeeks.filter({ $0.id == id }).first {
                 max = CGFloat(week.steps.map(\.count).max() ?? 0)
@@ -95,10 +108,16 @@ struct StepsChart: View {
 
 struct StepsChartWeek: View {
     
-    let steps: [Step]
-    let graphHeight: CGFloat = 235 //was 260
-    @State var selectedDay: Date?
+    // MARK: - Environment
     @EnvironmentObject var symptomJSONManager: SymptomJSONManager
+    
+    // MARK: - State
+    @State var selectedDay: Date?
+    
+    // MARK: - Type definitions
+    let steps: [Step]
+    let graphHeight: CGFloat = 235
+    
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -106,69 +125,74 @@ struct StepsChartWeek: View {
         return formatter
     }()
     
+    // MARK: - Body
     var body: some View {
+        
         let max = CGFloat(steps.map(\.count).max() ?? 0)
         let min: CGFloat = 0
         let ySpan: CGFloat = max - min
         let yFactor: CGFloat = graphHeight / ySpan
         
         ZStack {
-            Rectangle()
-                .frame(height: 5)
-                .offset(y: SettingsManager.stepCeiling * yFactor)
             
-        // COMPLETED STEP GRAPH VIEW FOR A WEEK
-        HStack(alignment: .lastTextBaseline) {
+            // Ceiling line & y-axis label
+            HStack {
+                Text("\(Int(SettingsManager.stepCeiling))")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color(.systemOrange))
+                    .offset(x: -1)
+                
+                RoundedRectangle(cornerRadius: 5)
+                    .offset(x: -8)
+                    .fill(Color(.systemYellow))
+                    .frame(height: 5)
+//                    .offset(y: SettingsManager.stepCeiling * yFactor)
+            }
+//            .frame(height: (inputted yValue of the week's chart * yFactor))
+            .offset(y: (SettingsManager.stepCeiling * yFactor) * 0.5)
+            // SettingsManager.stepCeiling * yFactor = yValue
             
-            ForEach(steps, id: \.id) { step in
-                let yValue = CGFloat(step.count) * yFactor
+            // Steps Graph View (7 days)
+            HStack(alignment: .lastTextBaseline) {
                 
-                
+                ForEach(steps, id: \.id) { step in
+                    let yValue = CGFloat(step.count) * yFactor
+
                     VStack {
                         
-                        Divider()
-                        
-                        
+                        // count number
                         Text("\(step.count)")
                             .font(.footnote)
                             .fontWeight(.bold)
-                            .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
+                            .foregroundColor(step.count > (Int(SettingsManager.stepCeiling)) ? Color(.systemPink) :Color(.systemGreen))
                             .frame(width: 50)
-                        //                                .lineLimit(nil)
-                        //                                .fixedSize(horizontal: false, vertical: true)
                         
-                        Divider()
+                        // steps bar
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(step.count > (Int(SettingsManager.stepCeiling)) ? Color(.systemPink) :Color(.systemGreen))
+                            //                                .frame(height: CGFloat(yValue))
+                            .frame(height: CGFloat(yValue))
+                            .frame(height: graphHeight, alignment: .bottom)
+                            .onTapGesture {
+                                didSelect(step: step)
+                            }
                         
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
-                                //                                .frame(height: CGFloat(yValue))
-                                .frame(height: CGFloat(yValue))
-                                //                                .overlay(
-                                //                                    Text("\(step.count)")
-                                //                                        .font(.caption)
-                                //                                        .fontWeight(.bold)
-                                //                                        .foregroundColor(step.count > 2000 ? Color(.systemPink) :Color(.systemGreen))
-                                //                                        .offset(y: -20),
-                                //                                    alignment: .top
-                                //                                )
-                                .frame(height: graphHeight, alignment: .bottom)
-                                .onTapGesture {
-                                    didSelect(step: step)
-                                }
-                        
+                        // x-axis label
                         Text("\(step.date, formatter: Self.dateFormatter)")
                             .font(.caption)
                             .foregroundColor(Color(.systemGray))
                     }
-                    .frame(width: 40)
+                    .frame(width: 40) //here
                 }
+            }
+            .offset(x: 10)
+            .padding(.vertical, 30)
+            .sheet(item: $selectedDay) { date in
+                SymptomsDailyView(date: date)
+                    .environmentObject(symptomJSONManager)
+            }
         }
-        .padding(.vertical, 30)
-        .sheet(item: $selectedDay) { date in
-            SymptomsDailyView(date: date)
-                .environmentObject(symptomJSONManager)
-        }
-    }
         
     }
     
@@ -180,14 +204,17 @@ struct StepsChartWeek: View {
 
 struct StepsChartCeilingText: View {
     
+    // MARK: - Body
     var body: some View {
-        Text("Your Step Count Ceiling this week: 2000 / day") // TODO: Replace hardcoded 2000 with actual goal set by user
+        (Text("Your Step Count Ceiling this week:") + Text("\(Int(SettingsManager.stepCeiling)) / day"))
+                // TODO: Replace hardcoded 2000 with actual goal set by user
             .font(.subheadline)
             .fontWeight(.bold)
             .foregroundColor(Color(.systemGray))
     }
     
 }
+
 
 //struct StepsChartView_Previews: PreviewProvider {
 //    static var previews: some View {

@@ -15,6 +15,7 @@ struct SummaryTabView: View {
     
     // MARK: - Body
     var body: some View {
+        
 
         NavigationView {
             ScrollView {
@@ -53,13 +54,14 @@ struct SummaryTabView: View {
                             StepsChartView(stepsWeeks: stepsWeeks)
                         }
                         
-                        Spacer()
+                 
                         
                         if !heartRates.isEmpty {
                             HeartRateChartView(heartRates: heartRates)
                         }
+              
+                    
                     }
-//                    .background(Color(.white))
                     .cornerRadius(10)
                     .padding(10)
 
@@ -78,6 +80,7 @@ struct SummaryTabView: View {
 
         }
     }
+    
 
     // MARK: - Initialiser that groups Steps & Heart Rate by day and week
     init(steps: [Step], heartRates: [HeartRate]) {
