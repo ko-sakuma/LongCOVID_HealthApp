@@ -1,4 +1,6 @@
 
+// REFERENCE: The author followed this tutorial to implement some of the notification flows: https://www.raywenderlich.com/21458686-local-notifications-getting-started
+
 import Foundation
 import UserNotifications
 import CoreLocation

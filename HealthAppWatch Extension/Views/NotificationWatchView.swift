@@ -1,11 +1,5 @@
-//
-//  ContentView.swift
-//  HealthAppWatch Extension
-//
-//  Created by Ko Sakuma on 01/07/2021.
-//
 
-// NOTE: DONT TOUCH THIS FILE UNLESS PAIRING WITH NotificationController.swift! Or maybe not. I dont actually know.
+// NOTE: DONT TOUCH THIS FILE UNLESS PAIRING WITH NotificationController.swift!
 
 import SwiftUI
 import UserNotifications

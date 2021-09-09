@@ -13,13 +13,3 @@ struct StepsWeek: Identifiable {
     }
     let steps: [Step]
 }
-
-//extension StepsWeek {
-//    var firstDate: Date? {
-//        return steps.first?.date
-//    }
-//
-//    var lastDate: Date? {
-//        return steps.last?.date
-//    }
-//}

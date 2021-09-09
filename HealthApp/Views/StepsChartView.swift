@@ -2,6 +2,7 @@
 // NOTE: The Views relating to Steps Chart are all here.
 
 import SwiftUI
+import Foundation
 
 struct StepsChartView: View {
     
@@ -10,9 +11,20 @@ struct StepsChartView: View {
     
     // MARK: - Body
     var body: some View {
-        StepsChartTitle()
-        StepsChart(stepsWeeks: stepsWeeks)
-        //        StepsChartCeilingText()
+        
+        ZStack {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(Color.white)
+            
+            VStack {
+                StepsChartTitle()
+                StepsChartDescription()
+                StepsChart(stepsWeeks: stepsWeeks)
+                
+                //        StepsChartCeilingText()
+            }
+    
+        }
     }
 }
 
@@ -21,17 +33,38 @@ struct StepsChartTitle:  View {
     
     // MARK: - Body
     var body: some View {
-        (Text(Image(systemName: "flame.fill")) + Text(" Steps"))
+        
+        (Text(Image(systemName: "figure.walk")) + Text(" Steps"))
             .font(.title2)
             .foregroundColor(Color(.systemRed))
             .fontWeight(.bold)
             .multilineTextAlignment(.leading)
+            .offset(x: -145)
+            .padding(.top, 10)
         
-        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.stepCeiling))😊 Green bar means you are meeting your daily goal!"))
+        
+//        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.stepCeiling))").bold().foregroundColor(Color(.systemOrange)) + Text(" \nGreen bar ").bold().foregroundColor(Color(.systemGreen)) + Text("means you are meeting your daily goal! ") )
+//            .foregroundColor(Color(.systemGray))
+//            .lineLimit(4)
+//            .multilineTextAlignment(.leading)
+//            .frame(width: 390, height: 100)
+//            .padding(.leading, 10)
+//            .padding(.trailing, 10)
+
+    }
+}
+
+struct StepsChartDescription: View {
+    
+    var body: some View {
+        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.stepCeiling))").bold().foregroundColor(Color(.systemOrange)) + Text(" \nGreen bar ").bold().foregroundColor(Color(.systemGreen)) + Text("means you are meeting your daily goal! ") )
             .foregroundColor(Color(.systemGray))
-            .lineLimit(5)
+            .lineLimit(4)
             .multilineTextAlignment(.leading)
             .frame(width: 390, height: 100)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+
     }
 }
 
@@ -141,7 +174,7 @@ struct StepsChartWeek: View {
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(Color(.systemOrange))
-                    .offset(x: -1)
+//                    .offset(x: -1)
                 
                 RoundedRectangle(cornerRadius: 5)
                     .offset(x: -8)
@@ -191,12 +224,15 @@ struct StepsChartWeek: View {
             .sheet(item: $selectedDay) { date in
                 SymptomsDailyView(date: date)
                     .environmentObject(symptomJSONManager)
+                
+               
             }
         }
         
     }
     
     func didSelect(step: Step) {
+        
         selectedDay = step.date
     }
 }

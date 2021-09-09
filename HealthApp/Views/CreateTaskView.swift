@@ -36,11 +36,9 @@ struct CreateTaskView: View {
           Form {
             Section {
               HStack {
-        //            Text("")
-        //                .font(.title)
-        //                .fontWeight(.bold)
-        //                .padding()
+    
                 Spacer()
+                
                 Button("Save") {
                   TaskManager.shared.addNewTask(taskName, makeReminder())
                   presentationMode.wrappedValue.dismiss()
@@ -69,15 +67,14 @@ struct CreateTaskView: View {
                     .navigationBarHidden(true)
                     .navigationTitle("")
                 }
-        //            Spacer()
               }
               .padding()
             }
           }
-        //      .navigationBarTitle("Tasks")
-          .navigationBarTitle("")
           .navigationBarHidden(true)
+        
         }
+       
     }
 
     

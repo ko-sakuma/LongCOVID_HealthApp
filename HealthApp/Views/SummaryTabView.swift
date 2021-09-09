@@ -1,4 +1,7 @@
 
+// NOTE: If the Navigation View did not function properly (i.e. as you scroll down, the "Activities History" text doesn't move along and stays there; or, the top navigation title bar doesn't appear), try to remove as many "padding()" inside the NavigationView as possible. This should resolve the problem. This behaviour is most likely due to a bug in SwiftUI: the background color is currently set by ".background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))" as suggested in this solution: https://www.hackingwithswift.com/forums/swiftui/set-background-of-scrollview-in-navigationview/2055
+
+
 import SwiftUI
 
 struct SummaryTabView: View {
@@ -13,79 +16,78 @@ struct SummaryTabView: View {
     let stepsWeeks: [StepsWeek]
     let heartRates: [HeartRate]
     
+
     // MARK: - Body
     var body: some View {
         
-
         NavigationView {
             ScrollView {
-
-                VStack(alignment: .leading) {
-//
-//                        Button(action: { showStepsChartView = true} ) {
-//                                                    VStack (alignment: .leading){
-//
-//                                                        HStack (alignment: .top) {
-//                                                            Image(systemName: "flame.fill")
-//
-//                                                            Text("Your Steps")
-//                                                                .font(.title2)
-//                                                                .fontWeight(.bold)
-//
-//                                                        }
-//
-//                                                        Divider()
-//
-//                                                        StepsChartCeilingText()
-//
-//                                                    }
-//                                                    .frame(minWidth: .infinity, minHeight: .infinity)
-//
-//                                                }
-//                                                .sheet(isPresented: $showStepsChartView) { StepsChartView(steps: steps) }
-//                                                .foregroundColor(Color(.systemPink))
-//                                                .background(Color(.systemGray6)) // background of the rectangle
-//                                                .cornerRadius(8)
-
                         
-                        
-//                       // STEP COUNT SECTION
-                        if !stepsWeeks.isEmpty {
-                            StepsChartView(stepsWeeks: stepsWeeks)
-                        }
-                        
-                 
-                        
-                        if !heartRates.isEmpty {
-                            HeartRateChartView(heartRates: heartRates)
-                        }
-              
+                VStack(alignment: .center) {
                     
+                    
+                    // STEP COUNT SECTION
+                    if !stepsWeeks.isEmpty {
+                        
+                        Text("Highlights")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .offset(x: -135, y: 10)
+                        
+                        StepsChartView(stepsWeeks: stepsWeeks)
+                            .cornerRadius(15)
+                        
                     }
-                    .cornerRadius(10)
-                    .padding(10)
+                    
+                    // HEART RATE SECTION
+                    if !heartRates.isEmpty {
+                        HeartRateChartView(heartRates: heartRates)
+                            .cornerRadius(15)
 
-                }
-                .navigationTitle("Summary")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Spacer()
+
+                        Text("\nWhat other information would you be interested in seeing here? Send us an email with a description. \nWe are here for you! 😊💪🏻\n")
+                            .foregroundColor(Color(.systemGray))
+                            .frame(width: 380)
+
                         Button(action: {
-                            // TODO: Add JSON things here, when ready!
-                            print("Remember to Add Helper info!")
-                        }, label: {
-                            Text("Need Help?")
-                        })
-                    }
-                }
+                            EmailHelper.shared.sendEmail(subject: "Request", body: "", to: "ko.sakuma.20@ucl.ac.uk")
+                        }) {
+                            Text("Send a Request")
+                                .padding(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color(.systemBlue), lineWidth: 1)
+                                )
 
+                        }
+
+                        Spacer()
+                        
+                    }
+                    
+                }
+          
+            }
+            .navigationTitle("Activities History")
+            .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        // TODO: Add Helper info here
+                        print("Remember to Add Helper info!")
+                    }, label: {
+                        Image(systemName: "questionmark.circle")
+                    })
+                }
+            }
         }
     }
-    
 
+ 
     // MARK: - Initialiser that groups Steps & Heart Rate by day and week
     init(steps: [Step], heartRates: [HeartRate]) {
         // Group daily steps data by week
-        
         var stepsWeeks = [StepsWeek]()
         var weekSteps = [Step]() // create an empty array, which I can later insert max 7 days worth of data
         
@@ -124,20 +126,27 @@ extension Date {
 }
 
 
+//// Reference: https://stackoverflow.com/questions/56923397/how-change-background-color-if-using-navigationview-in-swiftui
+//extension UINavigationController {
+//    override open func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//    let standard = UINavigationBarAppearance()
+//    standard.backgroundColor = .secondarySystemBackground //When you scroll or you have title (small one)
+//
+//    let compact = UINavigationBarAppearance()
+//    compact.backgroundColor = .secondarySystemBackground //compact-height
+//
+//    let scrollEdge = UINavigationBarAppearance()
+//    scrollEdge.backgroundColor = .secondarySystemBackground //When you have large title
+//
+//    navigationBar.standardAppearance = standard
+//    navigationBar.compactAppearance = compact
+//    navigationBar.scrollEdgeAppearance = scrollEdge
+// }
+//}
+
 struct TrackMeHome_Previews: PreviewProvider {
-//    struct Container: View {
-//        @State private var selectedTab: Int = 1000
-//        var body: some View {
-//            TabView(selection: $selectedTab) {
-//                ForEach(Array(0..<2000), id: \.self) { number in
-//                    Text(String(describing: number))
-//                        .tabItem { Text(String(describing: number)) }
-//                        .id(number)
-//                }
-//            }
-//            .tabViewStyle(PageTabViewStyle())
-//        }
-//    }
 
     static var previews: some View {
 
@@ -197,12 +206,6 @@ struct TrackMeHome_Previews: PreviewProvider {
 //                            .font(.subheadline)
 //                            .foregroundColor(Color(#colorLiteral(red: 0.43921568989753723, green: 0.43921568989753723, blue: 0.43921568989753723, alpha: 1)))
 //                            .padding(.top, 20.0)
-
-
-
-
-
-
 
 
 

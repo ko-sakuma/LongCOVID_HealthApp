@@ -4,7 +4,7 @@ import Foundation
 struct HeartRateDateGroup: Identifiable {
     var id = UUID()
     let date: Date
-    let heartRates: [HeartRate] // We might want to display all the data at some point
+    let heartRates: [HeartRate]
     let ranges: [HeartRateValueRange]
     let maxHR: Int
     let minHR: Int
@@ -12,13 +12,13 @@ struct HeartRateDateGroup: Identifiable {
 
 extension HeartRateDateGroup {
     init(date: Date, heartRates: [HeartRate]) {
-        let threshold: Int = 40 // BPM difference
+        // Threshold is for grouping BPM difference. Change in this number will result in a change in the size/frequency of the blobs.
+        let threshold: Int = 40
         
         var ranges = [HeartRateValueRange]()
        
         let sortedHeartRates = heartRates.sorted(by: { $0.count < $1.count })
         
-        // HERE
         var firstHeartRateInRange = sortedHeartRates[0]
         var lastHeartRateInRange = sortedHeartRates[0]
         
@@ -58,7 +58,7 @@ struct HeartRateValueRange: Identifiable {
     var id = UUID()
     let minHR: Int
     let maxHR: Int
-    let averageHR: Int // In this case it's not the average of all HR values, it's just the middle point between min and max - useful for rendering
+    let averageHR: Int // In this case it's not the average of all HR values, it's just the middle point between min and max - useful for rendering.
     let deltaHR: Int
 }
 

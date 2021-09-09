@@ -7,9 +7,12 @@ struct SymptomsDailyView: View {
     
     // MARK: - Environment
     @EnvironmentObject var symptomJSONManager: SymptomJSONManager
+    @Environment(\.presentationMode) var presentationMode
+    
     
     // MARK: - State
     @State var showUpdateMeView = false
+    
     
     @State var searchText = ""
     @State var searching = false
@@ -76,7 +79,7 @@ struct SymptomsDailyView: View {
                             .overlay(RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color.white, lineWidth: 1)
                             )
-                        }//: For Each
+                        }
                     }
                 }
                 
@@ -85,21 +88,16 @@ struct SymptomsDailyView: View {
             }
             .navigationTitle("How I felt on this day💭")
             .onAppear(perform: symptomJSONManager.readUserDataFromJSON)
-            
-            //            .toolbar {
-            //
-            //                ToolbarItem(placement: .navigationBarTrailing) {
-            //                    Button(action: {
-            //                        showUpdateMeView = true
-            //                    }, label: {
-            //                        Text("Update")
-            //                    })
-            //                    .sheet(isPresented: $showUpdateMeView){
-            //                        UpdateMeView()
-            //                    }
-            //                }
-            //
-            //            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Close")
+                            .fontWeight(.bold)
+                    })
+                }
+            }
             
         }
         

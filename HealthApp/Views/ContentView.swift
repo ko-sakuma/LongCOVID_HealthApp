@@ -10,12 +10,12 @@ struct ContentView: View {
     // MARK: - State
     @State private var steps: [Step] = [Step]()
     @State private var heartRates: [HeartRate] = [HeartRate]()
-    @State private var selection: Tab = .summary
+    @State private var selection: Tab = .activitiesHistory
 
     // MARK: - Type definitions
     enum Tab {
-        case summary
-        case targets
+        case activitiesHistory
+        case goals
         case symptomsHistoryTab
         case updateMeTab
     }
@@ -24,26 +24,26 @@ struct ContentView: View {
     var body: some View {
 
         TabView(selection: $selection) {
+            
+            TargetsTabView()
+                .tabItem { Label("Goals", systemImage: "house.fill") }
+                .tag(Tab.goals)
 
             SummaryTabView(steps: steps, heartRates: heartRates)
-                .tabItem { Label("Summary", systemImage: "house.fill") }
-                .tag(Tab.summary)
+                .tabItem { Label("Activities History", systemImage: "waveform.path.ecg") }
+                .tag(Tab.activitiesHistory)
 
-            TargetsTabView()
-                .tabItem { Label("Goals", systemImage: "target") }
-                .tag(Tab.targets)
-            
             SymptomHistoryView()
                 .tabItem {
-                    Label("Symptom History", systemImage: "text.badge.plus")
+                    Label("Symptoms History", systemImage: "text.badge.plus")
 
                 }
                 .tag(Tab.symptomsHistoryTab)
                 
-
-            UpdateMeView()
+            
+            SettingsView()
                 .tabItem {
-                    Label("Update", systemImage: "plus.circle")
+                    Label("Settings", systemImage: "gear")
                 }
                 .tag(Tab.updateMeTab)
         }
@@ -57,9 +57,7 @@ struct ContentView: View {
                             }
                         }
                     }
-//                    print("willLoad", Date())
                     HealthStore.shared.calculateHeartRate { hrSamples in
-//                        print("loaded", Date(), hrSamples)
                         DispatchQueue.main.async {
                             updateUIFromHeartRateSamples(hrSamples)
                         }

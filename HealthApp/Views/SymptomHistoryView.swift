@@ -1,14 +1,7 @@
-//
-//  TrackMe2.swift
-//  JsonExperiments
-//
-//  Created by Ko Sakuma on 16/07/2021.
-//
-//
+
 //TODO: if raw WatchConnectivity API turns out to be too complicated, look into using https://github.com/mutualmobile/MMWormhole
 
-
-// TODO: make the searchbar working: copy snippet from SymptomDailyView
+// TODO: make the searchbar working: copy snippet from SymptomDailyView but without date specific
 
 import SwiftUI
 
@@ -22,92 +15,145 @@ struct SymptomHistoryView: View {
     
     @State var searchText = ""
     @State var searching = false
-
+    
+//    // new
+//    @State private var showingDetail = false
+    
     // MARK: - Body
     var body: some View {
-
+        
         NavigationView {
+            
+            ScrollView {
 
-            ScrollView () {
-
-                VStack (alignment: .leading) {
+                VStack (alignment: .center) {
                     
+//                    Button("Show Detail") {
+//                                showingDetail = true
+//                            }
+//                            .sheet(isPresented: $showingDetail) {
+//                                UpdateMeView(isPresented: $showingDetail)
+//                            }
+//                    let theSymptoms = symptoms
+//
+//                    if theSymptoms.isEmpty {
+//
+//                        Text("No records for this day😅🤷‍♀️")
+//                            .foregroundColor(Color(.systemGray))
+//                            .offset(y: 300)
+//
+//                    } else {
+//                        searchBar
                     
                     ZStack {
-                                Rectangle()
-                                    .foregroundColor(Color("LightGray"))
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                    TextField("Search by symptom name", text: $searchText) { startedEditing in
-                                        if startedEditing {
-                                            withAnimation {
-                                                searching = true
-                                            }
-                                        }
-                                    } onCommit: {
-                                        withAnimation {
-                                            searching = false
-                                        }
+                        Rectangle()
+                            .foregroundColor(Color(.tertiarySystemBackground))
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(Color(.systemGray))
+                            TextField("Search by symptom name", text: $searchText)
+                            { startedEditing in
+                                if startedEditing {
+                                    withAnimation {
+                                        searching = true
                                     }
                                 }
-                                .foregroundColor(.gray)
-                                .padding(.leading, 13)
+                                
+                            } onCommit: {
+                                withAnimation {
+                                    searching = false
+                                }
                             }
-                                .frame(height: 40)
-                                .cornerRadius(13)
-                                .padding()
-            
-                    
-                    
-                    
-                    ForEach(symptomJSONManager.symptomDataArray.reversed()) { lineItem in
-                        HStack (alignment: .center) {
-
-                            Text(lineItem.symptom ?? "")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(Color(.systemIndigo))
-                                .padding()
-
-                            Text(symptomJSONManager.displayTimestamp(lineItem.timestamp ?? ""))
-                                .font(.caption)
-                                .foregroundColor(Color(.systemGray))
-                                .padding()
-
                         }
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.white, lineWidth: 1)
-
-                        )
-
+                        .foregroundColor(.gray)
+                        .padding(.leading, 13)
+                    }
+                    .frame(height: 40)
+                    .cornerRadius(13)
+                    .padding()
+                        
+                        ForEach(symptomJSONManager.symptomDataArray.reversed()) { lineItem in
+                            
+                            VStack {
+                                
+                                HStack (alignment: .center) {
+                                    
+                                    Text(lineItem.symptom ?? "")
+                                        .font(.title3)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color(.systemIndigo))
+                                        .padding()
+                                    
+                                    Text(symptomJSONManager.displayTimestamp(lineItem.timestamp ?? ""))
+                                        .font(.caption)
+                                        .foregroundColor(Color(.systemGray))
+                                        .padding()
+                                    
+                                    
+                                }
+                                
+                                Divider()
+                                //                                .frame(width: 350)
+                            }
+                        }
+                    }
+                    
+            }
+            .navigationTitle("Symptoms History")
+            .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
+            .onAppear(perform: symptomJSONManager.readUserDataFromJSON)
+            
+            .toolbar {
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showUpdateMeView = true
+                    }, label: {
+                        Text("Add")
+                    })
+                    .sheet(isPresented: $showUpdateMeView){
+                        UpdateMeView()
                     }
                 }
-
-
-
+                
             }
-            .navigationTitle("Symptoms")
-            .onAppear(perform: symptomJSONManager.readUserDataFromJSON)
-
-//            .toolbar {
+            
+            }
+            
+        }
+        
+    }
+    
+//    var searchBar: some View {
+//        ZStack {
+//            Rectangle()
+//                .foregroundColor(Color(.tertiarySystemBackground))
+//            HStack {
+//                Image(systemName: "magnifyingglass")
+//                    .foregroundColor(Color(.systemGray))
+//                TextField("Search by symptom name", text: $searchText)
+//                { startedEditing in
+//                    if startedEditing {
+//                        withAnimation {
+//                            searching = true
+//                        }
+//                    }
 //
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button(action: {
-//                        showUpdateMeView = true
-//                    }, label: {
-//                        Text("Update")
-//                    })
-//                    .sheet(isPresented: $showUpdateMeView){
-//                        UpdateMeView()
+//                } onCommit: {
+//                    withAnimation {
+//                        searching = false
 //                    }
 //                }
-//
 //            }
+//            .foregroundColor(.gray)
+//            .padding(.leading, 13)
+//        }
+//        .frame(height: 40)
+//        .cornerRadius(13)
+//        .padding()
+//    }
+    
 
-        }
-
-    }
-}
 
 
 
@@ -118,6 +164,68 @@ struct SymptomHistoryView_Previews: PreviewProvider {
             .environmentObject(SymptomJSONManager())
     }
 }
+
+
+//                let theSymptoms = symptoms
+//
+//                if theSymptoms.isEmpty {
+//                    Text("No records for this day😅🤷‍♀️")
+//                        .foregroundColor(Color(.systemGray))
+//                        .offset(y: 300)
+//
+//                } else {
+//
+//                ZStack {
+//                    Rectangle()
+//                        .foregroundColor(Color(.tertiarySystemBackground))
+//                    HStack {
+//                        Image(systemName: "magnifyingglass")
+//                            .foregroundColor(Color(.systemGray))
+//                        TextField("Search by symptom name", text: $searchText)
+//                        { startedEditing in
+//                            if startedEditing {
+//                                withAnimation {
+//                                    searching = true
+//                                }
+//                            }
+//
+//                        } onCommit: {
+//                            withAnimation {
+//                                searching = false
+//                            }
+//                        }
+//                    }
+//                    .foregroundColor(.gray)
+//                    .padding(.leading, 13)
+//                }
+//                .frame(height: 40)
+//                .cornerRadius(13)
+//                .padding()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //        List(symptomJSONManager.symptomDataArray.reversed() ){ lineItem in

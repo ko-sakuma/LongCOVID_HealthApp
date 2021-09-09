@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0844BD8726CF0FD40091428B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8626CF0FD40091428B /* SettingsView.swift */; };
+		0844BD8926CF14050091428B /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8826CF14050091428B /* EmailHelper.swift */; };
 		0845ADD126CC16270092F69B /* SymptomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD026CC16270092F69B /* SymptomHistoryView.swift */; };
 		0845ADD426CC16550092F69B /* UpdateMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD326CC16550092F69B /* UpdateMeView.swift */; };
 		0845ADD626CC16700092F69B /* SymptomJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD526CC16700092F69B /* SymptomJSONManager.swift */; };
@@ -131,6 +133,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0844BD8626CF0FD40091428B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0844BD8826CF14050091428B /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		0845ADD026CC16270092F69B /* SymptomHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomHistoryView.swift; sourceTree = "<group>"; };
 		0845ADD326CC16550092F69B /* UpdateMeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateMeView.swift; sourceTree = "<group>"; };
 		0845ADD526CC16700092F69B /* SymptomJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SymptomJSONManager.swift; path = ../../../../JsonExperiments/JsonExperiments/SymptomJSONManager.swift; sourceTree = "<group>"; };
@@ -415,15 +419,16 @@
 			isa = PBXGroup;
 			children = (
 				08F103352680E12E0017E6F9 /* ContentView.swift */,
+				08A79CE526934C0300A88E30 /* TargetsTabView.swift */,
+				08A79CE426934C0300A88E30 /* CreateTaskView.swift */,
 				08F1036A2681E86A0017E6F9 /* SummaryTabView.swift */,
 				084C43F626CD588B001B590A /* StepsChartView.swift */,
 				084C43F426CD571F001B590A /* HeartRateChartView.swift */,
 				084C43F826CD5A3F001B590A /* SymptomsDailyView.swift */,
-				08A79CE526934C0300A88E30 /* TargetsTabView.swift */,
-				08A79CE426934C0300A88E30 /* CreateTaskView.swift */,
-				08A79CE626934C0300A88E30 /* NotificationSettingView.swift */,
 				0845ADD026CC16270092F69B /* SymptomHistoryView.swift */,
+				08A79CE626934C0300A88E30 /* NotificationSettingView.swift */,
 				0845ADD326CC16550092F69B /* UpdateMeView.swift */,
+				0844BD8626CF0FD40091428B /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */,
+				0844BD8826CF14050091428B /* EmailHelper.swift */,
 				08921EA0269C727F003D0AB1 /* UserDefaults.swift */,
 				08A79CEC26934F5D00A88E30 /* AppDelegate.swift */,
 			);
@@ -758,10 +764,12 @@
 				08714011268A2ACE00F0048F /* ContentView.swift in Sources */,
 				08F1035F2680E1830017E6F9 /* HealthStore.swift in Sources */,
 				0845ADD926CC16C80092F69B /* UserData.swift in Sources */,
+				0844BD8926CF14050091428B /* EmailHelper.swift in Sources */,
 				08714010268A2AC000F0048F /* HeartRate.swift in Sources */,
 				0845ADD626CC16700092F69B /* SymptomJSONManager.swift in Sources */,
 				08A79CE026934BC700A88E30 /* TaskPersistenceManager.swift in Sources */,
 				08A79CE726934C0300A88E30 /* CreateTaskView.swift in Sources */,
+				0844BD8726CF0FD40091428B /* SettingsView.swift in Sources */,
 				08A0381226CD6ECA00B2D296 /* Identifiables.swift in Sources */,
 				084C43F926CD5A3F001B590A /* SymptomsDailyView.swift in Sources */,
 				08A79CE126934BC700A88E30 /* NotificationManager.swift in Sources */,

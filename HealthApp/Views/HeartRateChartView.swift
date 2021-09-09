@@ -96,12 +96,19 @@ struct HeartRateChartView: View {
  
     // MARK: - Body
     var body: some View {
-        VStack {
-            heartRateChartTitle
-            Spacer()
-            heartRateChartDescription
-            heartRateChart
-//            heartRateChartCeilingText
+        
+        ZStack {
+            
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.white)
+            
+            VStack {
+                heartRateChartTitle
+                Spacer()
+                heartRateChartDescription
+                heartRateChart
+    //            heartRateChartCeilingText
+            }
         }
     }
 
@@ -116,7 +123,8 @@ struct HeartRateChartView: View {
     
     var heartRateChartDescription: some View {
         
-        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.heartRateCeiling))😊 Green bar means you are meeting your daily goal!"))
+        (Text("Try to keep most of your heart rate below ") + Text("\(Int(SettingsManager.heartRateCeiling))").bold().foregroundColor(Color(.systemOrange)) + Text(" \nGreen blob ").bold().foregroundColor(Color(.systemGreen)) + Text("means you are meeting your daily goal! ") )
+//        (Text("Try to keep your daily steps below ") + Text("\(Int(SettingsManager.heartRateCeiling))😊 Green bar means you are meeting your daily goal!"))
             .foregroundColor(Color(.systemGray))
             .lineLimit(5)
             .multilineTextAlignment(.leading)

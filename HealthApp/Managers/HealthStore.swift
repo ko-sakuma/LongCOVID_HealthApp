@@ -48,7 +48,6 @@ class HealthStore {
 
         // startDate: defines the past 2 years (730 days)
         let startDate = Calendar.current.date(byAdding: .day, value: -730, to: Date())
-//        print(startDate)
 
         // anchorDate: defines what time a day actually starts at. mondayAt12AM() is my func, defined above.
         let anchorDate = Date.mondayAt12AM()
@@ -70,7 +69,6 @@ class HealthStore {
         }
 
 //        // if health data is available & query contains value, then execute the query
-//        // NOTE: if let ... is called "Optional Binding"
         if let healthStore = healthStore, let query =
             self.query {
             healthStore.execute(query)

@@ -2,6 +2,7 @@
 import SwiftUI
 
 // Note: Target = task in some places. Needs refactoring to targets.
+// TODO: Set the background color to secondarySystemBackground:      .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
 
 struct TargetsTabView: View {
     
@@ -12,6 +13,7 @@ struct TargetsTabView: View {
     @State var showNotificationSettingsUI = false
     @State var showCreateTaskView = false
     
+    
     // MARK: - Body
     var body: some View {
         
@@ -19,7 +21,7 @@ struct TargetsTabView: View {
             
             VStack {
                 if taskManager.tasks.isEmpty {
-                    Text("You haven't set any targets yet.")
+                    Text("You haven't set any goals yet.")
                         .font(.body)
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
@@ -27,12 +29,12 @@ struct TargetsTabView: View {
                     List(taskManager.tasks) { task in
                         TargetsView(task: task)
                     }
-                    .padding()
                 }
             }
             .navigationBarTitle("Goals")
+           
             .toolbar {
-                // left 
+                // left
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         checkNotificationAuthStatus()
@@ -40,9 +42,7 @@ struct TargetsTabView: View {
                         Image(systemName: "gear")
                             .font(.title)
                             .accentColor(.gray)
-                        
-                        //                        AddGoalView()
-                        
+
                     })
                     .sheet(isPresented: $showNotificationSettingsUI) {
                         NotificationSettingsView()
@@ -71,7 +71,7 @@ struct TargetsTabView: View {
                 
             }
         }
-        
+       
     }
     
     func checkNotificationAuthStatus() {
@@ -86,7 +86,7 @@ struct TargetsTabView: View {
 }
     
 
-// MARK: - SUPPORTING STRUCT: The added tasks in a list view. What i mainly see in the Goals tab.
+// MARK: - SUPPORTING STRUCT: The added tasks in a list view. What a user mainly sees in the Goals tab.
 struct TargetsView: View {
   var task: Task
 
@@ -145,9 +145,3 @@ struct ContentView2_Previews: PreviewProvider {    // name changed here
     TargetsTabView()
   }
 }
-
-
-
-
-//            Color(#colorLiteral(red: 0.9490196108818054, green: 0.9490196108818054, blue: 0.9686274528503418, alpha: 1))
-//                .ignoresSafeArea()

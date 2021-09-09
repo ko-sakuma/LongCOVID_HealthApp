@@ -21,42 +21,42 @@ struct UpdateMeWatchView: View {
         
         List {
 
-            Button("Physically Well") {
+            Button("Physically Well😊💪🏻") {
                 print("physically Well")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Physically Well", andTimeStamp: Date())
             }
 
             
-            Button("Fatigue") {
+            Button("Fatigue😵") {
                 print("fatigue")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Fatigue", andTimeStamp: Date())
             }
                 
 
-            Button("Dizzy") {
+            Button("Dizzy😩") {
                 print("dizzy")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Dizzy", andTimeStamp: Date())
             }
                 
 
-            Button("Chest Pain") {
+            Button("Chest Pain❤️😖") {
                 print("chest Pain")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Chest Pain", andTimeStamp: Date())
             }
                 
 
-            Button("Breathlessness") {
+            Button("Breathlessness😵💭") {
                 print("breathlessness")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Breathlessness", andTimeStamp: Date())
             }
                 
 
-            Button("Palpitation") {
+            Button("Palpitation❤️😫") {
                 print("Palpitation")
                 WKInterfaceDevice.current().play(.success)
                 symptomJSONManager.writeJSONToFileManager("Palpitation", andTimeStamp: Date())

@@ -9,8 +9,14 @@ import SwiftUI
 
 struct UpdateMeView: View {
     
+    // MARK: - Environment
+    @Environment(\.presentationMode) var presentationMode
+    
     // MARK: - State
     @EnvironmentObject var symptomJSONManager: SymptomJSONManager
+    
+//    // MARK: - Binding
+//    @Binding var isPresented: Bool
     
     // MARK: - Type definitions
     let haptic = UISelectionFeedbackGenerator()
@@ -28,7 +34,11 @@ struct UpdateMeView: View {
 //                .foregroundColor(Color(.systemOrange))
         
             VStack {
-                
+//                
+//                Button("Dismiss Me") {
+//                            isPresented = false
+//                        }
+//                
                 HStack {
                     Button(action: {
                         self.haptic.selectionChanged()
@@ -135,8 +145,20 @@ struct UpdateMeView: View {
                     }
                 
                 }
-        }
-        .navigationTitle("How are you?")
+            }
+            .navigationTitle("How are you?")
+            
+            // TODO: need to make the button work. Currently it doesnt close somehow.
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        presentationMode.wrappedValue.dismiss()
+//                    }, label: {
+//                        Text("Close")
+//                            .fontWeight(.bold)
+//                    })
+//                }
+//            }
             
         }
         
