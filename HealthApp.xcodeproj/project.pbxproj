@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		082468F426EA14D80094C21D /* HealthStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F326EA14D80094C21D /* HealthStoreTests.swift */; };
+		082468F626EA18BA0094C21D /* HealthStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F526EA18BA0094C21D /* HealthStoreProtocol.swift */; };
+		082468F826EA19C30094C21D /* FakeHealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F726EA19C30094C21D /* FakeHealthStore.swift */; };
 		0844BD8726CF0FD40091428B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8626CF0FD40091428B /* SettingsView.swift */; };
 		0844BD8926CF14050091428B /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8826CF14050091428B /* EmailHelper.swift */; };
 		0845ADD126CC16270092F69B /* SymptomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD026CC16270092F69B /* SymptomHistoryView.swift */; };
@@ -133,6 +136,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		082468F326EA14D80094C21D /* HealthStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreTests.swift; sourceTree = "<group>"; };
+		082468F526EA18BA0094C21D /* HealthStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreProtocol.swift; sourceTree = "<group>"; };
+		082468F726EA19C30094C21D /* FakeHealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHealthStore.swift; sourceTree = "<group>"; };
 		0844BD8626CF0FD40091428B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0844BD8826CF14050091428B /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		0845ADD026CC16270092F69B /* SymptomHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomHistoryView.swift; sourceTree = "<group>"; };
@@ -300,6 +306,8 @@
 			isa = PBXGroup;
 			children = (
 				08F1035E2680E1830017E6F9 /* HealthStore.swift */,
+				082468F526EA18BA0094C21D /* HealthStoreProtocol.swift */,
+				082468F726EA19C30094C21D /* FakeHealthStore.swift */,
 				08A79CDF26934BC700A88E30 /* LocationManager.swift */,
 				08A79CDD26934BC700A88E30 /* NotificationManager.swift */,
 				08A79CDE26934BC700A88E30 /* TaskManager.swift */,
@@ -381,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				08F103452680E12F0017E6F9 /* HealthAppTests.swift */,
+				082468F326EA14D80094C21D /* HealthStoreTests.swift */,
 				08F103472680E12F0017E6F9 /* Info.plist */,
 			);
 			path = HealthAppTests;
@@ -760,6 +769,7 @@
 				08921EA1269C727F003D0AB1 /* UserDefaults.swift in Sources */,
 				08A79CE926934C0300A88E30 /* NotificationSettingView.swift in Sources */,
 				08FFA8B726BF1BE60037616E /* OnFirstAppear.swift in Sources */,
+				082468F826EA19C30094C21D /* FakeHealthStore.swift in Sources */,
 				08F103662680F67A0017E6F9 /* Step.swift in Sources */,
 				08714011268A2ACE00F0048F /* ContentView.swift in Sources */,
 				08F1035F2680E1830017E6F9 /* HealthStore.swift in Sources */,
@@ -773,6 +783,7 @@
 				08A0381226CD6ECA00B2D296 /* Identifiables.swift in Sources */,
 				084C43F926CD5A3F001B590A /* SymptomsDailyView.swift in Sources */,
 				08A79CE126934BC700A88E30 /* NotificationManager.swift in Sources */,
+				082468F626EA18BA0094C21D /* HealthStoreProtocol.swift in Sources */,
 				084C43F726CD588B001B590A /* StepsChartView.swift in Sources */,
 				08F103342680E12E0017E6F9 /* HealthAppMain.swift in Sources */,
 				08CCE17426C2DDC600DDC665 /* Experiment.swift in Sources */,
@@ -788,6 +799,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F103462680E12F0017E6F9 /* HealthAppTests.swift in Sources */,
+				082468F426EA14D80094C21D /* HealthStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,7 @@ import UserNotifications
 
 class HealthStore {
 
-    var healthStore: HKHealthStore?
+    var healthStore: HealthStoreProtocol?
     var query: HKStatisticsCollectionQuery?
     var sampleQuery: HKSampleQuery?
 
@@ -18,6 +18,12 @@ class HealthStore {
     private init() {
         if HKHealthStore.isHealthDataAvailable() {
             healthStore = HKHealthStore()
+        }
+    }
+    
+    init(healthStore: HealthStoreProtocol) {
+        if type(of: healthStore).isHealthDataAvailable() {
+            self.healthStore = healthStore
         }
     }
 

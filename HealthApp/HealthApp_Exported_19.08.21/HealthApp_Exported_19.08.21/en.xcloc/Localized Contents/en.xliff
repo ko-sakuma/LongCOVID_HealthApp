@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="HealthApp/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>HealthApp</source>
+        <target>HealthApp</target>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
+        <source>This app requires to access your health data.</source>
+        <target>This app requires to access your health data.</target>
+        <note>Privacy - Health Share Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
+        <source>This app requires to access your health data.</source>
+        <target>This app requires to access your health data.</target>
+        <note>Privacy - Health Update Usage Description</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="HealthApp/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+    </header>
+    <body>
+      <trans-unit id="       Dizzy        " xml:space="preserve">
+        <source>       Dizzy        </source>
+        <target>       Dizzy        </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="    Chest Pain     " xml:space="preserve">
+        <source>    Chest Pain     </source>
+        <target>    Chest Pain     </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="   Fatigue    " xml:space="preserve">
+        <source>   Fatigue    </source>
+        <target>   Fatigue    </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="  Palpitation  " xml:space="preserve">
+        <source>  Palpitation  </source>
+        <target>  Palpitation  </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="  Physically Well  " xml:space="preserve">
+        <source>  Physically Well  </source>
+        <target>  Physically Well  </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id=" Heart Rates" xml:space="preserve">
+        <source> Heart Rates</source>
+        <target> Heart Rates</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id=" Steps" xml:space="preserve">
+        <source> Steps</source>
+        <target> Steps</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@" xml:space="preserve">
+        <source>%@</source>
+        <target>%@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ BPM" xml:space="preserve">
+        <source>%@ BPM</source>
+        <target>%@ BPM</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ minute" xml:space="preserve">
+        <source>%@ minute</source>
+        <target>%@ minute</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ minutes" xml:space="preserve">
+        <source>%@ minutes</source>
+        <target>%@ minutes</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add a Goal" xml:space="preserve">
+        <source>Add a Goal</source>
+        <target>Add a Goal</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Breathlessness" xml:space="preserve">
+        <source>Breathlessness</source>
+        <target>Breathlessness</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Count" xml:space="preserve">
+        <source>Count</source>
+        <target>Count</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Create" xml:space="preserve">
+        <source>Create</source>
+        <target>Create</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Date" xml:space="preserve">
+        <source>Date</source>
+        <target>Date</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter Latitude" xml:space="preserve">
+        <source>Enter Latitude</source>
+        <target>Enter Latitude</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter Longitude" xml:space="preserve">
+        <source>Enter Longitude</source>
+        <target>Enter Longitude</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter Radius" xml:space="preserve">
+        <source>Enter Radius</source>
+        <target>Enter Radius</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Green means you are meeting your heart rate goal! Your current ceiling is 120." xml:space="preserve">
+        <source>Green means you are meeting your heart rate goal! Your current ceiling is 120.</source>
+        <target>Green means you are meeting your heart rate goal! Your current ceiling is 120.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Heart Rate" xml:space="preserve">
+        <source>Heart Rate</source>
+        <target>Heart Rate</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="How are you feeling?" xml:space="preserve">
+        <source>How are you feeling?</source>
+        <target>How are you feeling?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Location" xml:space="preserve">
+        <source>Location</source>
+        <target>Location</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Make this a daily routine" xml:space="preserve">
+        <source>Make this a daily routine</source>
+        <target>Make this a daily routine</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Need Help?" xml:space="preserve">
+        <source>Need Help?</source>
+        <target>Need Help?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No Symptoms for this Date" xml:space="preserve">
+        <source>No Symptoms for this Date</source>
+        <target>No Symptoms for this Date</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Request Location Authorization" xml:space="preserve">
+        <source>Request Location Authorization</source>
+        <target>Request Location Authorization</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search .." xml:space="preserve">
+        <source>Search ..</source>
+        <target>Search ..</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search by symptom name" xml:space="preserve">
+        <source>Search by symptom name</source>
+        <target>Search by symptom name</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search for a symptom" xml:space="preserve">
+        <source>Search for a symptom</source>
+        <target>Search for a symptom</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set a smart reminder" xml:space="preserve">
+        <source>Set a smart reminder</source>
+        <target>Set a smart reminder</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Time" xml:space="preserve">
+        <source>Time</source>
+        <target>Time</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Try to keep your daily steps below 2000😊 Green bar means you are meeting your daily goal!" xml:space="preserve">
+        <source>Try to keep your daily steps below 2000😊 Green bar means you are meeting your daily goal!</source>
+        <target>Try to keep your daily steps below 2000😊 Green bar means you are meeting your daily goal!</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Type the name of your new target..." xml:space="preserve">
+        <source>Type the name of your new target...</source>
+        <target>Type the name of your new target...</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Update" xml:space="preserve">
+        <source>Update</source>
+        <target>Update</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="You haven't set any targets yet." xml:space="preserve">
+        <source>You haven't set any targets yet.</source>
+        <target>You haven't set any targets yet.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your Heart Rate ceiling this week: 70" xml:space="preserve">
+        <source>Your Heart Rate ceiling this week: 70</source>
+        <target>Your Heart Rate ceiling this week: 70</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your Step Count Ceiling this week: 2000 / day" xml:space="preserve">
+        <source>Your Step Count Ceiling this week: 2000 / day</source>
+        <target>Your Step Count Ceiling this week: 2000 / day</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your Steps" xml:space="preserve">
+        <source>Your Steps</source>
+        <target>Your Steps</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your average heart rate this week:  %@" xml:space="preserve">
+        <source>Your average heart rate this week:  %@</source>
+        <target>Your average heart rate this week:  %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your heart rate range this week: %@ - %@" xml:space="preserve">
+        <source>Your heart rate range this week: %1$@ - %2$@</source>
+        <target>Your heart rate range this week: %1$@ - %2$@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="iPhone" xml:space="preserve">
+        <source>iPhone</source>
+        <target>iPhone</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="max" xml:space="preserve">
+        <source>max</source>
+        <target>max</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="min" xml:space="preserve">
+        <source>min</source>
+        <target>min</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="❤️😖" xml:space="preserve">
+        <source>❤️😖</source>
+        <target>❤️😖</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="❤️😫" xml:space="preserve">
+        <source>❤️😫</source>
+        <target>❤️😫</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="😊💪🏻" xml:space="preserve">
+        <source>😊💪🏻</source>
+        <target>😊💪🏻</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="😩" xml:space="preserve">
+        <source>😩</source>
+        <target>😩</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="😵" xml:space="preserve">
+        <source>😵</source>
+        <target>😵</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="😵💭" xml:space="preserve">
+        <source>😵💭</source>
+        <target>😵💭</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="HealthAppWatch Extension/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>HealthAppWatch Extension</source>
+        <target>HealthAppWatch Extension</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>HealthAppWatch Extension</source>
+        <target>HealthAppWatch Extension</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="HealthAppWatch Extension/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5" build-num="12E262"/>
+    </header>
+    <body>
+      <trans-unit id="1st" xml:space="preserve">
+        <source>1st</source>
+        <target>1st</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="3rd" xml:space="preserve">
+        <source>3rd</source>
+        <target>3rd</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="4th" xml:space="preserve">
+        <source>4th</source>
+        <target>4th</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="5th" xml:space="preserve">
+        <source>5th</source>
+        <target>5th</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="6th" xml:space="preserve">
+        <source>6th</source>
+        <target>6th</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Breathlessness" xml:space="preserve">
+        <source>Breathlessness</source>
+        <target>Breathlessness</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Chest Pain" xml:space="preserve">
+        <source>Chest Pain</source>
+        <target>Chest Pain</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Dizzy" xml:space="preserve">
+        <source>Dizzy</source>
+        <target>Dizzy</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Fatigue" xml:space="preserve">
+        <source>Fatigue</source>
+        <target>Fatigue</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Hello, World!" xml:space="preserve">
+        <source>Hello, World!</source>
+        <target>Hello, World!</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="How are you feeling?" xml:space="preserve">
+        <source>How are you feeling?</source>
+        <target>How are you feeling?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="I feel the best face here" xml:space="preserve">
+        <source>I feel the best face here</source>
+        <target>I feel the best face here</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="I'm feeling great face here" xml:space="preserve">
+        <source>I'm feeling great face here</source>
+        <target>I'm feeling great face here</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="I'm good Face here" xml:space="preserve">
+        <source>I'm good Face here</source>
+        <target>I'm good Face here</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Okay Face here" xml:space="preserve">
+        <source>Okay Face here</source>
+        <target>Okay Face here</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Palpitation" xml:space="preserve">
+        <source>Palpitation</source>
+        <target>Palpitation</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Physically Well" xml:space="preserve">
+        <source>Physically Well</source>
+        <target>Physically Well</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Press me" xml:space="preserve">
+        <source>Press me</source>
+        <target>Press me</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sad Face here" xml:space="preserve">
+        <source>Sad Face here</source>
+        <target>Sad Face here</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Second" xml:space="preserve">
+        <source>Second</source>
+        <target>Second</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
