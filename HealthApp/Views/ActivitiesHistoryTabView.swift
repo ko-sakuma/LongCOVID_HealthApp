@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct SummaryTabView: View {
+struct ActivitiesHistoryTabView: View {
 
     // MARK: - Environment
     @Environment(\.calendar) private var calendar // Get the user's default calendar preference (week starts from Mon/Sun)
@@ -186,7 +186,7 @@ struct TrackMeHome_Previews: PreviewProvider {
 //
 //        ]
 
-        SummaryTabView(steps: steps, heartRates: heartRates)
+        ActivitiesHistoryTabView(steps: steps, heartRates: heartRates)
 
     }
 }

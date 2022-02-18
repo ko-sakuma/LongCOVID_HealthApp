@@ -10,9 +10,9 @@
 		082468F426EA14D80094C21D /* HealthStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F326EA14D80094C21D /* HealthStoreTests.swift */; };
 		082468F626EA18BA0094C21D /* HealthStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F526EA18BA0094C21D /* HealthStoreProtocol.swift */; };
 		082468F826EA19C30094C21D /* FakeHealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082468F726EA19C30094C21D /* FakeHealthStore.swift */; };
-		0844BD8726CF0FD40091428B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8626CF0FD40091428B /* SettingsView.swift */; };
+		0844BD8726CF0FD40091428B /* SettingsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8626CF0FD40091428B /* SettingsTabView.swift */; };
 		0844BD8926CF14050091428B /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0844BD8826CF14050091428B /* EmailHelper.swift */; };
-		0845ADD126CC16270092F69B /* SymptomHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD026CC16270092F69B /* SymptomHistoryView.swift */; };
+		0845ADD126CC16270092F69B /* SymptomHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD026CC16270092F69B /* SymptomHistoryTabView.swift */; };
 		0845ADD426CC16550092F69B /* UpdateMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD326CC16550092F69B /* UpdateMeView.swift */; };
 		0845ADD626CC16700092F69B /* SymptomJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD526CC16700092F69B /* SymptomJSONManager.swift */; };
 		0845ADD726CC16700092F69B /* SymptomJSONManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845ADD526CC16700092F69B /* SymptomJSONManager.swift */; };
@@ -47,7 +47,7 @@
 		08A79CE226934BC700A88E30 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CDE26934BC700A88E30 /* TaskManager.swift */; };
 		08A79CE326934BC700A88E30 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CDF26934BC700A88E30 /* LocationManager.swift */; };
 		08A79CE726934C0300A88E30 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CE426934C0300A88E30 /* CreateTaskView.swift */; };
-		08A79CE826934C0300A88E30 /* TargetsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CE526934C0300A88E30 /* TargetsTabView.swift */; };
+		08A79CE826934C0300A88E30 /* GoalsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CE526934C0300A88E30 /* GoalsTabView.swift */; };
 		08A79CE926934C0300A88E30 /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CE626934C0300A88E30 /* NotificationSettingView.swift */; };
 		08A79CEB26934C0F00A88E30 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CEA26934C0F00A88E30 /* Task.swift */; };
 		08A79CED26934F5D00A88E30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A79CEC26934F5D00A88E30 /* AppDelegate.swift */; };
@@ -61,7 +61,8 @@
 		08F1035F2680E1830017E6F9 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1035E2680E1830017E6F9 /* HealthStore.swift */; };
 		08F103632680E92D0017E6F9 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F103622680E92D0017E6F9 /* HealthKit.framework */; };
 		08F103662680F67A0017E6F9 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F103652680F67A0017E6F9 /* Step.swift */; };
-		08F1036B2681E86A0017E6F9 /* SummaryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1036A2681E86A0017E6F9 /* SummaryTabView.swift */; };
+		08F1036B2681E86A0017E6F9 /* ActivitiesHistoryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1036A2681E86A0017E6F9 /* ActivitiesHistoryTabView.swift */; };
+		08FBB99D270DB8A50050D323 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FBB99C270DB8A50050D323 /* ReminderView.swift */; };
 		08FFA8B726BF1BE60037616E /* OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,9 +140,9 @@
 		082468F326EA14D80094C21D /* HealthStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreTests.swift; sourceTree = "<group>"; };
 		082468F526EA18BA0094C21D /* HealthStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreProtocol.swift; sourceTree = "<group>"; };
 		082468F726EA19C30094C21D /* FakeHealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeHealthStore.swift; sourceTree = "<group>"; };
-		0844BD8626CF0FD40091428B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0844BD8626CF0FD40091428B /* SettingsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabView.swift; sourceTree = "<group>"; };
 		0844BD8826CF14050091428B /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
-		0845ADD026CC16270092F69B /* SymptomHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomHistoryView.swift; sourceTree = "<group>"; };
+		0845ADD026CC16270092F69B /* SymptomHistoryTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymptomHistoryTabView.swift; sourceTree = "<group>"; };
 		0845ADD326CC16550092F69B /* UpdateMeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateMeView.swift; sourceTree = "<group>"; };
 		0845ADD526CC16700092F69B /* SymptomJSONManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SymptomJSONManager.swift; path = ../../../../JsonExperiments/JsonExperiments/SymptomJSONManager.swift; sourceTree = "<group>"; };
 		0845ADD826CC16C80092F69B /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -178,7 +179,7 @@
 		08A79CDE26934BC700A88E30 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		08A79CDF26934BC700A88E30 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		08A79CE426934C0300A88E30 /* CreateTaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
-		08A79CE526934C0300A88E30 /* TargetsTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetsTabView.swift; sourceTree = "<group>"; };
+		08A79CE526934C0300A88E30 /* GoalsTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsTabView.swift; sourceTree = "<group>"; };
 		08A79CE626934C0300A88E30 /* NotificationSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
 		08A79CEA26934C0F00A88E30 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		08A79CEC26934F5D00A88E30 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,7 +202,8 @@
 		08F103602680E92D0017E6F9 /* HealthApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthApp.entitlements; sourceTree = "<group>"; };
 		08F103622680E92D0017E6F9 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		08F103652680F67A0017E6F9 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
-		08F1036A2681E86A0017E6F9 /* SummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTabView.swift; sourceTree = "<group>"; };
+		08F1036A2681E86A0017E6F9 /* ActivitiesHistoryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesHistoryTabView.swift; sourceTree = "<group>"; };
+		08FBB99C270DB8A50050D323 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		08FFA8B626BF1BE60037616E /* OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFirstAppear.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,16 +430,17 @@
 			isa = PBXGroup;
 			children = (
 				08F103352680E12E0017E6F9 /* ContentView.swift */,
-				08A79CE526934C0300A88E30 /* TargetsTabView.swift */,
+				08A79CE526934C0300A88E30 /* GoalsTabView.swift */,
 				08A79CE426934C0300A88E30 /* CreateTaskView.swift */,
-				08F1036A2681E86A0017E6F9 /* SummaryTabView.swift */,
+				08FBB99C270DB8A50050D323 /* ReminderView.swift */,
+				08F1036A2681E86A0017E6F9 /* ActivitiesHistoryTabView.swift */,
 				084C43F626CD588B001B590A /* StepsChartView.swift */,
 				084C43F426CD571F001B590A /* HeartRateChartView.swift */,
 				084C43F826CD5A3F001B590A /* SymptomsDailyView.swift */,
-				0845ADD026CC16270092F69B /* SymptomHistoryView.swift */,
+				0845ADD026CC16270092F69B /* SymptomHistoryTabView.swift */,
 				08A79CE626934C0300A88E30 /* NotificationSettingView.swift */,
 				0845ADD326CC16550092F69B /* UpdateMeView.swift */,
-				0844BD8626CF0FD40091428B /* SettingsView.swift */,
+				0844BD8626CF0FD40091428B /* SettingsTabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -761,7 +764,7 @@
 			files = (
 				084C43F526CD571F001B590A /* HeartRateChartView.swift in Sources */,
 				08A79CE226934BC700A88E30 /* TaskManager.swift in Sources */,
-				08F1036B2681E86A0017E6F9 /* SummaryTabView.swift in Sources */,
+				08F1036B2681E86A0017E6F9 /* ActivitiesHistoryTabView.swift in Sources */,
 				084D339026C0289500C4519E /* HeartRateDateGroup.swift in Sources */,
 				08A79CE326934BC700A88E30 /* LocationManager.swift in Sources */,
 				08A79CED26934F5D00A88E30 /* AppDelegate.swift in Sources */,
@@ -773,13 +776,14 @@
 				08F103662680F67A0017E6F9 /* Step.swift in Sources */,
 				08714011268A2ACE00F0048F /* ContentView.swift in Sources */,
 				08F1035F2680E1830017E6F9 /* HealthStore.swift in Sources */,
+				08FBB99D270DB8A50050D323 /* ReminderView.swift in Sources */,
 				0845ADD926CC16C80092F69B /* UserData.swift in Sources */,
 				0844BD8926CF14050091428B /* EmailHelper.swift in Sources */,
 				08714010268A2AC000F0048F /* HeartRate.swift in Sources */,
 				0845ADD626CC16700092F69B /* SymptomJSONManager.swift in Sources */,
 				08A79CE026934BC700A88E30 /* TaskPersistenceManager.swift in Sources */,
 				08A79CE726934C0300A88E30 /* CreateTaskView.swift in Sources */,
-				0844BD8726CF0FD40091428B /* SettingsView.swift in Sources */,
+				0844BD8726CF0FD40091428B /* SettingsTabView.swift in Sources */,
 				08A0381226CD6ECA00B2D296 /* Identifiables.swift in Sources */,
 				084C43F926CD5A3F001B590A /* SymptomsDailyView.swift in Sources */,
 				08A79CE126934BC700A88E30 /* NotificationManager.swift in Sources */,
@@ -788,9 +792,9 @@
 				08F103342680E12E0017E6F9 /* HealthAppMain.swift in Sources */,
 				08CCE17426C2DDC600DDC665 /* Experiment.swift in Sources */,
 				08A0381426CD73DE00B2D296 /* SettingsManager.swift in Sources */,
-				0845ADD126CC16270092F69B /* SymptomHistoryView.swift in Sources */,
+				0845ADD126CC16270092F69B /* SymptomHistoryTabView.swift in Sources */,
 				08A79CEB26934C0F00A88E30 /* Task.swift in Sources */,
-				08A79CE826934C0300A88E30 /* TargetsTabView.swift in Sources */,
+				08A79CE826934C0300A88E30 /* GoalsTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

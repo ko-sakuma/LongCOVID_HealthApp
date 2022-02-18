@@ -25,15 +25,15 @@ struct ContentView: View {
 
         TabView(selection: $selection) {
             
-            TargetsTabView()
+            GoalsTabView()
                 .tabItem { Label("Goals", systemImage: "house.fill") }
                 .tag(Tab.goals)
 
-            SummaryTabView(steps: steps, heartRates: heartRates)
+            ActivitiesHistoryTabView(steps: steps, heartRates: heartRates)
                 .tabItem { Label("Activities History", systemImage: "waveform.path.ecg") }
                 .tag(Tab.activitiesHistory)
 
-            SymptomHistoryView()
+            SymptomHistoryTabView()
                 .tabItem {
                     Label("Symptoms History", systemImage: "text.badge.plus")
 
@@ -41,7 +41,7 @@ struct ContentView: View {
                 .tag(Tab.symptomsHistoryTab)
                 
             
-            SettingsView()
+            SettingsTabView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }

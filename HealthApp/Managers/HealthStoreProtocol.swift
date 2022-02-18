@@ -1,9 +1,5 @@
-//
-//  HealthStoreProtocol.swift
-//  HealthApp
-//
-//  Created by Ko Sakuma on 09/09/2021.
-//
+
+// NOTE: HealthStoreProtocal.swift was created for unit testing purpose.
 
 import Foundation
 import HealthKit

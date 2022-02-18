@@ -4,7 +4,7 @@ import SwiftUI
 // Note: Target = task in some places. Needs refactoring to targets.
 // TODO: Set the background color to secondarySystemBackground:      .background(Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all))
 
-struct TargetsTabView: View {
+struct GoalsTabView: View {
     
     // MARK: - Observed Object
     @ObservedObject var taskManager = TaskManager.shared
@@ -27,7 +27,7 @@ struct TargetsTabView: View {
                         .multilineTextAlignment(.center)
                 } else {
                     List(taskManager.tasks) { task in
-                        TargetsView(task: task)
+                        GoalsView(task: task)
                     }
                 }
             }
@@ -87,7 +87,7 @@ struct TargetsTabView: View {
     
 
 // MARK: - SUPPORTING STRUCT: The added tasks in a list view. What a user mainly sees in the Goals tab.
-struct TargetsView: View {
+struct GoalsView: View {
   var task: Task
 
   var body: some View {
@@ -142,6 +142,6 @@ struct TargetsView: View {
 
 struct ContentView2_Previews: PreviewProvider {    // name changed here
   static var previews: some View {
-    TargetsTabView()
+    GoalsTabView()
   }
 }

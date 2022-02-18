@@ -1,9 +1,9 @@
 
+// TODO: "Save" button saves the Goal, but does not dismiss the view/sheet. Potentially due to @Environment(\.presentationMode) var presentationMode. Try the alternative approach: https://www.hackingwithswift.com/quick-start/swiftui/how-to-make-a-view-dismiss-itself
+
 import SwiftUI
 import MapKit
 import HealthKit
-
-// TODO: task -> target
 
 struct CreateTaskView: View {
     
@@ -40,12 +40,13 @@ struct CreateTaskView: View {
                 Spacer()
                 
                 Button("Save") {
-                  TaskManager.shared.addNewTask(taskName, makeReminder())
-                  presentationMode.wrappedValue.dismiss()
+                    TaskManager.shared.addNewTask(taskName, makeReminder())
+                    presentationMode.wrappedValue.dismiss()
                 }
                 .disabled(taskName.isEmpty ? true : false)
                 .padding()
               }
+                
               VStack {
                 TextField("Type the name of your new target...", text: $taskName)
                   .padding(.vertical)
@@ -71,6 +72,20 @@ struct CreateTaskView: View {
               .padding()
             }
           }
+            // Potentially usable
+//          .navigationTitle("Create a goal")
+//          .toolbar {
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//                Button(action: {
+//                    TaskManager.shared.addNewTask(taskName, makeReminder())
+//                    presentationMode.wrappedValue.dismiss()
+//                }, label: {
+//                    Text("Close")
+//                        .fontWeight(.bold)
+//                })
+//            }
+//          }
+            
           .navigationBarHidden(true)
         
         }
@@ -120,111 +135,128 @@ struct CreateTaskView: View {
       }
     }
 
-    struct ReminderView: View {
-        @Binding var selectedTrigger: ReminderType
-        @Binding var timeDurationIndex: Int
-        @Binding var heartRateCeiling: Int       // HEART RATE CEILING
-        @Binding var triggerDate: Date
-        @Binding var shouldRepeat: Bool
-        @Binding var latitude: String
-        @Binding var longitude: String
-        @Binding var radius: String
-        @StateObject var locationManager = LocationManager()
 
-    var mainPicker: some View {
 
-        Picker("Notification Trigger", selection: $selectedTrigger) {
-            Text("Time").tag(ReminderType.time)
-            Text("Date").tag(ReminderType.calendar)
-            Text("Location").tag(ReminderType.location)
-            Text("Heart Rate").tag(ReminderType.heartRateCeiling)     // Heart Rate NOTIF
-        }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding(.vertical)
-    }
 
-    var body: some View {
-        VStack {
-            mainPicker
 
-            pickerForSelectedTrigger()
 
-            Toggle(isOn: $shouldRepeat) {
-                Text("Make this a daily routine")
-            }
-        }
-    }
 
-        
-    var timePicker: some View {
-        Picker("Time Interval", selection: $timeDurationIndex) {
-            ForEach(1 ..< 59) { interval in
-                if interval == 1 {
-                    Text("\(interval) minute").tag(interval)
-                } else {
-                    Text("\(interval) minutes").tag(interval)
-                }
-            }
-            .navigationBarHidden(true)
-            .padding(.vertical)
-        }
-    }
 
-    var calendarPicker: some View {
-        DatePicker("Please enter a date", selection: $triggerDate)
-            .labelsHidden()
-            .padding(.vertical)
-    }
 
-    var locationPicker: some View {
-        VStack {
-            if !locationManager.authorized {
-                Button(
-                    action: {
-                        locationManager.requestAuthorization()
-                    },
-                    label: {
-                        Text("Request Location Authorization")
-                    })
-            } else { // geocoding CLGeoCoder CoreLocation
-                TextField("Enter Latitude", text: $latitude)
-                TextField("Enter Longitude", text: $longitude)
-                TextField("Enter Radius", text: $radius)
-            }
-        }
-        .padding(.vertical)
-    }
 
-    var heartRatePicker: some View {
-        Picker("Heart Rate Ceiling", selection: $heartRateCeiling) {
-            ForEach(40 ..< 160) { heartRateCeiling in
-                if heartRateCeiling == 1 {
-                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
-                } else {
-                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
-                }
-            }
-        }
-        .navigationBarTitle("", displayMode: .inline)
-        .onChange(of: heartRateCeiling) { limit in
-            HealthStore.shared.maximumBPM = limit
 
-        }
-    }
 
-    @ViewBuilder
-    func pickerForSelectedTrigger() -> some View {
 
-        // TIME
-        switch selectedTrigger {
-        case .time:
-            timePicker
-        case .calendar:
-            calendarPicker
-        case .location:
-            locationPicker
-        default:
-            heartRatePicker
-        }
-    }
-}
+
+
+// NOTE: Below was moved to ReminderView
+
+
+//    struct ReminderView: View {
+//        @Binding var selectedTrigger: ReminderType
+//        @Binding var timeDurationIndex: Int
+//        @Binding var heartRateCeiling: Int       // HEART RATE CEILING
+//        @Binding var triggerDate: Date
+//        @Binding var shouldRepeat: Bool
+//        @Binding var latitude: String
+//        @Binding var longitude: String
+//        @Binding var radius: String
+//        @StateObject var locationManager = LocationManager()
+//
+//    var mainPicker: some View {
+//
+//        Picker("Notification Trigger", selection: $selectedTrigger) {
+//            Text("Time").tag(ReminderType.time)
+//            Text("Date").tag(ReminderType.calendar)
+//            Text("Location").tag(ReminderType.location)
+//            Text("Heart Rate").tag(ReminderType.heartRateCeiling)     // Heart Rate NOTIF
+//        }
+//        .pickerStyle(SegmentedPickerStyle())
+//        .padding(.vertical)
+//    }
+//
+//    var body: some View {
+//        VStack {
+//            mainPicker
+//
+//            pickerForSelectedTrigger()
+//
+//            Toggle(isOn: $shouldRepeat) {
+//                Text("Make this a daily routine")
+//            }
+//        }
+//    }
+//
+//        
+//    var timePicker: some View {
+//        Picker("Time Interval", selection: $timeDurationIndex) {
+//            ForEach(1 ..< 59) { interval in
+//                if interval == 1 {
+//                    Text("\(interval) minute").tag(interval)
+//                } else {
+//                    Text("\(interval) minutes").tag(interval)
+//                }
+//            }
+//            .navigationBarHidden(true)
+//            .padding(.vertical)
+//        }
+//    }
+//
+//    var calendarPicker: some View {
+//        DatePicker("Please enter a date", selection: $triggerDate)
+//            .labelsHidden()
+//            .padding(.vertical)
+//    }
+//
+//    var locationPicker: some View {
+//        VStack {
+//            if !locationManager.authorized {
+//                Button(
+//                    action: {
+//                        locationManager.requestAuthorization()
+//                    },
+//                    label: {
+//                        Text("Request Location Authorization")
+//                    })
+//            } else { // geocoding CLGeoCoder CoreLocation
+//                TextField("Enter Latitude", text: $latitude)
+//                TextField("Enter Longitude", text: $longitude)
+//                TextField("Enter Radius", text: $radius)
+//            }
+//        }
+//        .padding(.vertical)
+//    }
+//
+//    var heartRatePicker: some View {
+//        Picker("Heart Rate Ceiling", selection: $heartRateCeiling) {
+//            ForEach(40 ..< 160) { heartRateCeiling in
+//                if heartRateCeiling == 1 {
+//                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
+//                } else {
+//                    Text("\(heartRateCeiling) BPM").tag(heartRateCeiling)
+//                }
+//            }
+//        }
+//        .navigationBarTitle("", displayMode: .inline)
+//        .onChange(of: heartRateCeiling) { limit in
+//            HealthStore.shared.maximumBPM = limit
+//
+//        }
+//    }
+//
+//    @ViewBuilder
+//    func pickerForSelectedTrigger() -> some View {
+//
+//        // TIME
+//        switch selectedTrigger {
+//        case .time:
+//            timePicker
+//        case .calendar:
+//            calendarPicker
+//        case .location:
+//            locationPicker
+//        default:
+//            heartRatePicker
+//        }
+//    }
+//}

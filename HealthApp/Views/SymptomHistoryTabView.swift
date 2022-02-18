@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct SymptomHistoryView: View {
+struct SymptomHistoryTabView: View {
     
     // MARK: - Environment
     @EnvironmentObject var symptomJSONManager: SymptomJSONManager
@@ -160,7 +160,7 @@ struct SymptomHistoryView: View {
 
 struct SymptomHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        SymptomHistoryView()
+        SymptomHistoryTabView()
             .environmentObject(SymptomJSONManager())
     }
 }
