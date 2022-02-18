@@ -1,4 +1,4 @@
-# LongCOVID_App
+# LongCOVID_HealthApp
 
 Pace helps patients to self-manage their recovery process with an iPhone and Apple Watch app. Pace is distinctly different from the existing Long COVID applications in 2 key regards: (1) Pace is the first attempt to leverage wearable data in the Long COVID recovery app space, and (2) Instead of symptom-tracking, Pace focuses on motivating patients to find and accomplish appropriate daily activity goals.
 
